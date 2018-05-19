@@ -1,6 +1,11 @@
 #include "Conta.h"
 
-//Conta::Conta(const int& numeroConta, const Cliente& Cliente);
+Conta::Conta(const int& numeroConta, const Cliente& cliente){
+    this->numeroConta = numeroConta;
+    this->proximoNumeroConta = numeroConta + 1;
+    this->saldo = 0;
+    this->cliente = cliente;
+}
 
 //Getters
 //const int& Conta::getNumeroConta();

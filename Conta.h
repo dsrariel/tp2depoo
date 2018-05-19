@@ -17,7 +17,7 @@ class Conta{
     ListaDeMovimentacoes movimentacoes;
 
     public:
-    Conta(const int& numeroConta, const Cliente& Cliente);
+    Conta(const int& numeroConta, const Cliente& cliente);
 
     //Getters
     const int& getNumeroConta();
