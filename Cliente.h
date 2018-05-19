@@ -3,28 +3,27 @@
 
 #include <iostream>
 #include <string>
-using namespace std;
 
 class Cliente{
     private:
-    string  nomeCliente;
-    string  cpfCnpj;
-    string  endereco;
-    string  telefone;
+    std::string  nomeCliente;
+    std::string  cpfCnpj;
+    std::string  endereco;
+    std::string  telefone;
 
     public:
-    Cliente(const string& nomeCliente, const string& cpfCnpj, const string& endereco, const string& telefone);
+    Cliente(const std::string& nomeCliente, const std::string& cpfCnpj, const std::string& endereco, const std::string& telefone);
 
     //Setters
-    void setNomeCliente(const string& nomeCliente);
-    void setCpfCnpj(const string& cpfCnpj);
-    void setEndereco(const string& endereco);
-    void setTelefone(const string& telefone);
+    void setNomeCliente(const std::string& nomeCliente);
+    void setCpfCnpj(const std::string& cpfCnpj);
+    void setEndereco(const std::string& endereco);
+    void setTelefone(const std::string& telefone);
 
     //Getters
-    const string& getNomeCliente();
-    const string& getCpfCnpj();
-    const string& getEndereco();
-    const string& getTelefone();
+    const std::string& getNomeCliente();
+    const std::string& getCpfCnpj();
+    const std::string& getEndereco();
+    const std::string& getTelefone();
 };
 #endif

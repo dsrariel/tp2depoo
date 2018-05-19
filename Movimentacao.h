@@ -3,21 +3,20 @@
 
 #include <iostream>
 #include <string>
-using namespace std;
 
 class Movimentacao{
     private:
-    string  dataMovimentacao;
-    string  descricao;
+    std::string  dataMovimentacao;
+    std::string  descricao;
     char    debitoCredito;
     double  valor;
 
     public:
-    Movimentacao(const string& descricao, const char& debitoCredito, const double& valor);
+    Movimentacao(const std::string& descricao, const char& debitoCredito, const double& valor);
 
     //Getters
-    const string& getDataMovimentacao();
-    const string& getDescricao();
+    const std::string& getDataMovimentacao();
+    const std::string& getDescricao();
     const char& getDebitoCredito();
     const double& getValor();
 };
