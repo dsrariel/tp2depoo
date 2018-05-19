@@ -1,5 +1,4 @@
 #include "Movimentacao.h"
-#include <time.h>
 
 Movimentacao::Movimentacao(const std::string& descricao, const char& debitoCredito, const double& valor){
     time_t agora;

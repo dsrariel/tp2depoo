@@ -1,8 +1,8 @@
 #ifndef MOVIMENTACAO_H 
 #define MOVIMENTACAO_H
 
-#include <iostream>
 #include <string>
+#include <time.h>
 
 class Movimentacao{
     private:
