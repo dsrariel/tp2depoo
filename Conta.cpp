@@ -1,6 +1,6 @@
 #include "Conta.h"
 
-//Conta::Conta(const Cliente& Cliente);
+//Conta::Conta(const int& numeroConta, const Cliente& Cliente);
 
 //Getters
 //const int& Conta::getNumeroConta();
