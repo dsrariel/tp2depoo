@@ -6,8 +6,8 @@
 #include "Cliente.h"
 #include "Conta.h"
 
-typedef std::list<Cliente> ListaDeClientes
-typedef std::list<Conta> ListaDeContas
+typedef std::list<Cliente> ListaDeClientes;
+typedef std::list<Conta> ListaDeContas;
 
 class Banco{
     private:
@@ -22,9 +22,10 @@ class Banco{
     void setDados();
 
     //Getters
-    const ListaDeCliente& getClientes();
+    const ListaDeClientes& getClientes();
     const ListaDeContas& getContas();
     void getDados();
+    const int& getNovoNumeroConta(); //Gera novo número de conta para criação de conta 
 
     //Outros
     const int& inserirCliente(const Cliente& cliente); //Retorna 1 caso cliente não exista (sucesso) e 0 caso já exista (falha)
