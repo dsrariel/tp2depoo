@@ -12,12 +12,12 @@ class Movimentacao{
     double  valor;
 
     public:
-    Movimentacao(const std::string& descricao, const char& debitoCredito, const double& valor);
+    Movimentacao(const std::string descricao, const char debitoCredito, const double valor);
 
     //Getters
-    const std::string& getDataMovimentacao();
-    const std::string& getDescricao();
-    const char& getDebitoCredito();
-    const double& getValor();
+    const std::string getDataMovimentacao();
+    const std::string getDescricao();
+    const char getDebitoCredito();
+    const double getValor();
 };
 #endif
