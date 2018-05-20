@@ -12,24 +12,24 @@ class Conta{
     private:
     int numeroConta;
     int proximoNumeroConta;
-    double  saldo;
+    double saldo;
     Cliente cliente;
     ListaDeMovimentacoes movimentacoes;
 
     public:
-    Conta(const int& numeroConta, const Cliente& cliente);
+    Conta(const int numeroConta, const Cliente &cliente);
 
     //Getters
-    const int& getNumeroConta();
-    const int& getProximoNumeroConta();
-    const double& getSaldo();
-    const Cliente& getCliente();
-    const ListaDeMovimentacoes& getMovimentacoes();
+    const int getNumeroConta();
+    const int getProximoNumeroConta();
+    const double getSaldo();
+    const Cliente getCliente();
+    const ListaDeMovimentacoes getMovimentacoes();
 
     //Outras funções
-    void debitar(const double& valor, const std::string& descricao);
-    void creditar(const double& valor, const std::string& descricao);
-    const ListaDeMovimentacoes& extratoDatas(const time_t& inicio, const time_t& fim);
-    const ListaDeMovimentacoes& extratoMes();
+    void debitar(const double valor, const std::string descricao);
+    void creditar(const double valor, const std::string descricao);
+    const ListaDeMovimentacoes extratoDatas(const time_t inicio, const time_t fim);
+    const ListaDeMovimentacoes extratoMes();
 };
 #endif
