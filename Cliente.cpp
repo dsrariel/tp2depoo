@@ -7,6 +7,13 @@ Cliente::Cliente(const std::string& nomeCliente, const std::string& cpfCnpj, con
     this->telefone = telefone;
 }
 
+Cliente::Cliente(const Cliente& original){
+    this->nomeCliente = original.nomeCliente;
+    this->cpfCnpj = original.cpfCnpj;
+    this->endereco = original.endereco;
+    this->telefone = original.telefone;
+}
+
 void Cliente::setNomeCliente(const std::string& nomeCliente){
     this->nomeCliente = nomeCliente;
 }

@@ -12,6 +12,7 @@ class Cliente{
 
     public:
     Cliente(const std::string& nomeCliente, const std::string& cpfCnpj, const std::string& endereco, const std::string& telefone);
+    Cliente(const Cliente& original);
 
     //Setters
     void setNomeCliente(const std::string& nomeCliente);
