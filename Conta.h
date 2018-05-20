@@ -29,7 +29,11 @@ class Conta{
     //Outras funções
     void debitar(const double valor, const std::string descricao);
     void creditar(const double valor, const std::string descricao);
-    const ListaDeMovimentacoes extratoDatas(const time_t inicio, const time_t fim);
+    const ListaDeMovimentacoes extratoDatas(const std::string inicio, const std::string fim);
     const ListaDeMovimentacoes extratoMes();
 };
+
+//Função que determina se uma data está entre outras duas:
+int dataEntreInicioEFim(const std::string data, const std::string inicio, const std::string fim);
+
 #endif

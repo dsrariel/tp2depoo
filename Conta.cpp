@@ -25,7 +25,17 @@ const ListaDeMovimentacoes Conta::getMovimentacoes(){
 }
 
 //Outras funções
-//void Conta::debitar(const double valor, const std::string descricao);
-//void Conta::creditar(const double valor, const std::string descricao);
-//const Movimentacoes Conta::extratoDatas(const time_t inicio, const time_t fim);
-//const Movimentacoes Conta::extratoMes();
+void Conta::debitar(const double valor, const std::string descricao){
+    Movimentacao movimentacao(descricao, 'D', valor);
+    this->movimentacoes.push_back(movimentacao);
+}
+void Conta::creditar(const double valor, const std::string descricao){
+    Movimentacao movimentacao(descricao, 'C', valor);
+    this->movimentacoes.push_back(movimentacao);
+}
+const ListaDeMovimentacoes Conta::extratoDatas(const std::string inicio, const std::string fim){
+    
+}
+//const ListaDeMovimentacoes Conta::extratoMes();
+
+int dataEntreInicioEFim(const std::string data, const std::string inicio, const std::string fim){}
