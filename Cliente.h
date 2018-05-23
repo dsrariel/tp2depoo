@@ -27,4 +27,7 @@ class Cliente{
     const std::string getEndereco();
     const std::string getTelefone();
 };
+
+bool operator==(const Cliente& A, const Cliente& B);
+
 #endif
