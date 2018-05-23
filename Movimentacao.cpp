@@ -3,6 +3,9 @@
 Movimentacao::Movimentacao(const std::string descricao, const char debitoCredito, const double valor){
     time_t agora = time(NULL);
     tm* data = localtime(&agora);
+    data->tm_sec = 0;
+    data->tm_min = 0;
+    data->tm_hour = 0;
 
     this->dataMovimentacao = data;
     this->descricao = descricao;
