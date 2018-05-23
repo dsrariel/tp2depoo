@@ -6,7 +6,7 @@
 
 class Movimentacao{
     private:
-    std::string  dataMovimentacao;
+    struct tm*  dataMovimentacao;
     std::string  descricao;
     char    debitoCredito;
     double  valor;
@@ -15,7 +15,7 @@ class Movimentacao{
     Movimentacao(const std::string descricao, const char debitoCredito, const double valor);
 
     //Getters
-    const std::string getDataMovimentacao();
+    const tm& getDataMovimentacao();
     const std::string getDescricao();
     const char getDebitoCredito();
     const double getValor();
