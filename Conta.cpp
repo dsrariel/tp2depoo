@@ -35,8 +35,13 @@ void Conta::creditar(const double valor, const std::string descricao){
     Movimentacao movimentacao(descricao, 'C', valor);
     this->movimentacoes.push_back(movimentacao);
 }
-const ListaDeMovimentacoes Conta::extratoDatas(const std::string inicio, const std::string fim){
+const ListaDeMovimentacoes extratoDatas(tm& inicio, tm& fim){
+    time_t  time_inicio = mktime(&inicio), 
+            time_fim = mktime(&fim),
+            time_data;
     
+    ListaDeMovimentacoes movimentacoesDoPeriodo;
+    if (difftime(time_inicio, time_fim) < 0)
 }
 //const ListaDeMovimentacoes Conta::extratoMes();
 

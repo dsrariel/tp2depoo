@@ -29,7 +29,7 @@ class Conta{
     //Outras funções
     void debitar(const double valor, const std::string descricao);
     void creditar(const double valor, const std::string descricao);
-    const ListaDeMovimentacoes extratoDatas(const std::string inicio, const std::string fim);
+    const ListaDeMovimentacoes extratoDatas(const tm& inicio, const tm& fim);
     const ListaDeMovimentacoes extratoMes();
 };
 
