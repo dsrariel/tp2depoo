@@ -8,12 +8,10 @@
 
 typedef std::list<Movimentacao> ListaDeMovimentacoes;
 
-static int numeroContaAtual = 0;
-
-class Conta{
+class Conta{ 
     private:
     int numeroConta;
-    int proximoNumeroConta;
+    static int proximoNumeroConta;
     double saldo;
     Cliente cliente;
     ListaDeMovimentacoes movimentacoes;

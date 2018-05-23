@@ -1,8 +1,10 @@
 #include "Conta.h"
 
+int Conta::proximoNumeroConta = 0;
+
 Conta::Conta(const Cliente &cliente){
-    this->numeroConta = numeroContaAtual;
-    this->proximoNumeroConta = ++numeroContaAtual;
+    this->numeroConta = proximoNumeroConta;
+    this->proximoNumeroConta++;
     this->saldo = 0;
     this->cliente = cliente;
 }
