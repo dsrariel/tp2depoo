@@ -8,6 +8,8 @@
 
 typedef std::list<Movimentacao> ListaDeMovimentacoes;
 
+static int numeroContaAtual = 0;
+
 class Conta{
     private:
     int numeroConta;
@@ -17,7 +19,7 @@ class Conta{
     ListaDeMovimentacoes movimentacoes;
 
     public:
-    Conta(const int numeroConta, const Cliente &cliente);
+    Conta(const Cliente &cliente);
 
     //Getters
     const int getNumeroConta();
