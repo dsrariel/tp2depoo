@@ -3,6 +3,7 @@
 
 #include <string>
 #include <list>
+#include <iterator>
 #include "Cliente.h"
 #include "Movimentacao.h"
 
@@ -29,11 +30,11 @@ class Conta{
     //Outras funções
     void debitar(const double valor, const std::string descricao);
     void creditar(const double valor, const std::string descricao);
-    const ListaDeMovimentacoes extratoDatas(const tm& inicio, const tm& fim);
+    const ListaDeMovimentacoes extratoDatas(const tm dataInicio, const tm dataFim);
     const ListaDeMovimentacoes extratoMes();
 };
 
 //Função que determina se uma data está entre outras duas:
-int dataEntreInicioEFim(const std::string data, const std::string inicio, const std::string fim);
+int dataEntreInicioEFim(const tm data, const tm inicio, const tm fim);
 
 #endif
