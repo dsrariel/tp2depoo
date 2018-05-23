@@ -2,10 +2,9 @@
 
 Movimentacao::Movimentacao(const std::string descricao, const char debitoCredito, const double valor){
     time_t agora = time(NULL);
-    tm* data = localtime(&agora);
-    data->tm_sec = 0;
-    data->tm_min = 0;
-    data->tm_hour = 0;
+    tm* dataAtual = localtime(&agora);
+    
+    tm data = {0, 0, 0, dataAtual->tm_mday, dataAtual->tm_mon, dataAtual->tm_year};
 
     this->dataMovimentacao = data;
     this->descricao = descricao;
@@ -13,8 +12,8 @@ Movimentacao::Movimentacao(const std::string descricao, const char debitoCredito
     this->valor = valor;
 }
 
-const tm& Movimentacao::getDataMovimentacao(){
-    return *(this->dataMovimentacao);
+const tm Movimentacao::getDataMovimentacao(){
+    return this->dataMovimentacao;
 }
 const std::string Movimentacao::getDescricao(){
     return this->descricao;
