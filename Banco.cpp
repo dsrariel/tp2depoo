@@ -40,7 +40,7 @@ bool Banco::excluirCliente(const std::string& cpfCnpj){
             return 1;                
         }
     }
-    //Cliente não encotrado
+    //Cliente não encontrado
     return 0;
 }
 
