@@ -48,3 +48,16 @@ void Banco::inserirConta(const Cliente& cliente){
     Conta conta = Conta(cliente);
     this->contas.push_back(conta);
 }
+
+bool Banco::excluirConta (int numeroConta){
+    ListaDeContas::iterator it;
+    for (it = this->contas.begin(); it != this->contas.end(); it++){
+        //Conta encontrada
+        if(it->getNumeroConta==numeroConta){
+            this->contas.erase(it);
+            return 1;
+        }
+    }
+    //Conta não encontrada
+    return 0;
+}
