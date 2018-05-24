@@ -49,5 +49,5 @@ const std::string Cliente::getTelefone(){
 }
 
 bool operator==(const Cliente& A, const Cliente& B){
-    return ((A.getCpfCnpj==B.getCpfCnpj)&&(A.getEndereco==B.getEndereco)&&(A.getNomeCliente==B.getNomeCliente)&&(A.getTelefone==B.getTelefone));
+    return ((A.getCpfCnpj()==B.getCpfCnpj())&&(A.getEndereco()==B.getEndereco())&&(A.getNomeCliente()==B.getNomeCliente())&&(A.getTelefone()==B.getTelefone()));
 }
