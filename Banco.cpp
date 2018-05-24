@@ -28,16 +28,16 @@ bool Banco::excluirCliente(const std::string& cpfCnpj){
     ListaDeContas::iterator it2;
     for (it1 = this->clientes.begin(); it1 != this->clientes.end(); it1++){
         //Cliente encontrado
-        if(it1->getCpfCnpj == cpfCnpj){
-            for (it2 = this->contas.begin(); it2 != this->contas.end(); it2++){    
+        if(it1->getCpfCnpj() == cpfCnpj){
+            for (it2 = this->contas.begin(); it2 != this->contas.end(); it2++){
                 //Conta encontrada
-                if(it2->getCliente==it1){
+                if(it2->getCliente()==it1){
                     return 0;
                 }
             }
             //Conta não encontrada
-            this->clientes.erase(it1);    
-            return 1;                
+            this->clientes.erase(it1);
+            return 1;
         }
     }
     //Cliente não encontrado
@@ -53,11 +53,89 @@ bool Banco::excluirConta (int numeroConta){
     ListaDeContas::iterator it;
     for (it = this->contas.begin(); it != this->contas.end(); it++){
         //Conta encontrada
-        if(it->getNumeroConta==numeroConta){
+        if(it->getNumeroConta() == numeroConta){
             this->contas.erase(it);
             return 1;
         }
     }
     //Conta não encontrada
     return 0;
+}
+
+bool Banco::depositar (int numeroConta, double valor){
+    ListaDeContas::iterator it;
+    for(it= this->contas.begin();it != this->contas.end();it++){
+        //conta encontrada
+        if(it->getNumeroConta() == numeroConta){
+            it->creditar(valor,"Deposito");
+            return 1;
+        }
+    }
+    //conta nao encontrada
+    return 0;
+}
+
+bool Banco::sacar (int numeroConta, double valor){
+    ListaDeContas::iterator it;
+    for(it= this->contas.begin();it != this->contas.end();it++){
+        //conta encontrada
+        if(it->getNumeroConta() == numeroConta){
+            //saldo insuficiente
+            if(it->getSaldo()<valor){
+                return 0;
+            }else{      //saldo suficiente
+                it->debitar(valor,"Saque");
+                return 1;
+            }
+        }
+    }
+    //conta nao encontrada
+    return 0;
+}
+
+bool Banco::transferencia (int numeroContaOrigem, int numeroContaDestino, double valor){
+    ListaDeContas::iterator it,contaO,contaD;
+    for(it= this->contas.begin();it != this->contas.end();it++){
+        //encontrou conta de origem
+        if(it->getNumeroConta() == numeroContaOrigem){
+            contaO=it;
+        }
+        //encontrou conta de destino
+        if(it->getNumeroConta() == numeroContaDestino){
+            contaD=it;
+        }
+    }
+    //as duas contas existem
+    if((contaO->getNumeroConta()==numeroContaOrigem) && (contaD->getNumeroConta()==numeroContaDestino)){
+        std::string descricao,str1,str2;
+        descricao="Transferencia para conta " + std::to_string(numeroContaDestino);
+        //conta de origem com saldo suficiente, transferencia realizada
+        if(contaO->debitar(valor,descricao)){
+            descricao="Transferencia da conta " + std::to_string(numeroContaOrigem);
+            contaD->creditar(valor,descricao);
+            return 1;
+        }
+
+    }
+    return 0;
+
+}
+
+void Banco::tarifa(){
+    ListaDeContas::iterator it;
+    for(it= this->contas.begin();it != this->contas.end();it++){
+        it->debitar(15,"Cobranca de Tarifa.");
+    }
+}
+
+int Banco::saldoConta(int numeroConta){
+    ListaDeContas::iterator it;
+    for(it= this->contas.begin();it != this->contas.end();it++){
+        //conta encontrada
+         if(it->getNumeroConta() == numeroConta){
+            return it->getSaldo();
+         }
+    }
+    //conta nao encontrada
+    return -1;
 }
