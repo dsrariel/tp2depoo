@@ -8,12 +8,16 @@ const ListaDeClientes  Banco::getClientes(){
     return this->clientes;
 }
 
-const ListaDeContas Banco::getContas(){        
+const ListaDeContas Banco::getContas(){
     return this->contas;
 }
 
+const int getNovoNumeroConta(){
+    return this->contas.begin().proximoNumeroConta;
+}
+
 bool Banco::inserirCliente(const Cliente& cliente){
-    auto it = std::find(this->clientes.begin(), this->clientes.end(), cliente);
+    ListaDeClientes::iterator it = std::find(this->clientes.begin(), this->clientes.end(), cliente);
     if(it == this->clientes.end()){
         this->clientes.push_back(cliente);
         return 1;
@@ -128,6 +132,29 @@ void Banco::tarifa(){
     }
 }
 
+void Banco::cpmf(){
+    ListaDeContas::iterator itC;
+    ListaDeMovimentacoes movimetacoesDaSemana;
+    ListaDeMovimentacoes:: iterator itM;
+    double Cpmf=0;
+    //percorre a lista de contas
+    for(itC= this->contas.begin();itC != this->contas.end();itC++){
+        movimetacoesDaSemana=itC->extratoDatas(inicio,fim);
+        //soma todos os valores das movimentacoes de debito
+        for(itM=movimetacoesDaSemana.begin();itM != movimetacoesDaSemana.end();itM++){
+            if(itM->getDebitoCredito()=='D'){
+               Cpmf=Cpmf+itM->getValor();
+            }
+        }
+        //debita 0.38% da conta
+        if(Cpmf!=0){
+            Cpmf=Cpmf*0,0038;
+            itC->debitar(Cpmf,"Cobranca de CPMF.");
+        }
+
+    }
+}
+
 int Banco::saldoConta(int numeroConta){
     ListaDeContas::iterator it;
     for(it= this->contas.begin();it != this->contas.end();it++){
@@ -138,4 +165,24 @@ int Banco::saldoConta(int numeroConta){
     }
     //conta nao encontrada
     return -1;
+}
+
+const ListaDeMovimentacoes Banco::extratoMes(int numeroConta){
+    ListaDeContas::iterator it;
+    for(it= this->contas.begin();it != this->contas.end();it++){
+        //conta encontrada
+         if(it->getNumeroConta() == numeroConta){
+            return it->extratoMes();
+         }
+    }
+}
+
+const ListaDeMovimentacoes Banco::extratoDatas(int numeroConta, tm inicio, tm fim){
+    ListaDeContas::iterator it;
+    for(it= this->contas.begin();it != this->contas.end();it++){
+        //conta encontrada
+         if(it->getNumeroConta() == numeroConta){
+            return it->extratoDatas(inicio,fim);
+         }
+    }
 }
