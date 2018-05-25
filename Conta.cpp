@@ -29,10 +29,12 @@ const ListaDeMovimentacoes Conta::getMovimentacoes(){
 //Outras funções
 void Conta::debitar(const double valor, const std::string descricao){
     Movimentacao movimentacao(descricao, 'D', valor);
+    this->saldo -= valor;
     this->movimentacoes.push_back(movimentacao);
 }
 void Conta::creditar(const double valor, const std::string descricao){
     Movimentacao movimentacao(descricao, 'C', valor);
+    this->saldo += valor;
     this->movimentacoes.push_back(movimentacao);
 }
 
