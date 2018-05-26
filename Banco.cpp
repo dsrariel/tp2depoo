@@ -151,12 +151,12 @@ bool Banco::transferencia (int numeroContaOrigem, int numeroContaDestino, double
     }
     //as duas contas existem
     if((contaO->getNumeroConta()==numeroContaOrigem) && (contaD->getNumeroConta()==numeroContaDestino)){
-        std::string descricao, str1, str2;
+        std::string descricao,str1,str2;
         descricao="Transferencia para conta " + std::to_string(numeroContaDestino);
         //conta de origem com saldo suficiente, transferencia realizada
-        if(contaO->debitar(valor, descricao)){
+        if(contaO->debitar(valor,descricao)){
             descricao="Transferencia da conta " + std::to_string(numeroContaOrigem);
-            contaD->creditar(valor, descricao);
+            contaD->creditar(valor,descricao);
             return 1;
         }
 

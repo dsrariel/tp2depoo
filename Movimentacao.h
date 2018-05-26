@@ -15,9 +15,9 @@ class Movimentacao{
     Movimentacao(const std::string descricao, const char debitoCredito, const double valor);
 
     //Getters
-    tm getDataMovimentacao();
-    std::string getDescricao();
-    char getDebitoCredito();
-    double getValor();
+    const tm getDataMovimentacao();
+    const std::string getDescricao();
+    const char getDebitoCredito();
+    const double getValor();
 };
 #endif

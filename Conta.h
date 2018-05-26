@@ -21,11 +21,11 @@ class Conta{
     Conta(const Cliente &cliente);
 
     //Getters
-    int getNumeroConta();
-    int getProximoNumeroConta();
-    double getSaldo();
-    Cliente getCliente();
-    ListaDeMovimentacoes getMovimentacoes();
+    const int getNumeroConta();
+    const int getProximoNumeroConta();
+    const double getSaldo();
+    const Cliente getCliente();
+    const ListaDeMovimentacoes getMovimentacoes();
 
     //Outras funções
     void debitar(const double valor, const std::string descricao);

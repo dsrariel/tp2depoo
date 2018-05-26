@@ -23,10 +23,10 @@ class Cliente{
     void setTelefone(const std::string telefone);
 
     //Getters
-    std::string getNomeCliente();
-    std::string getCpfCnpj();
-    std::string getEndereco();
-    std::string getTelefone();
+    std::string const getNomeCliente();
+    std::string const getCpfCnpj();
+    std::string const getEndereco();
+    std::string const getTelefone();
 };
 
 #endif
