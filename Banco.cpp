@@ -16,7 +16,7 @@ void Banco::setDados(){
 
     if (arq.is_open()){
 
-        arq < "CLIENTES \n\n";
+        arq << "CLIENTES \n\n";
 
         for (it1 = this->clientes.begin(); it1 != this->clientes.end(); it1++){
             arq << "Nome: " << it1->getNomeCliente() << "\n";
@@ -37,7 +37,7 @@ void Banco::setDados(){
                 data=it3->getDataMovimentacao();
                 dia=data.tm_mday;
                 mes=data.tm_mon+1;
-                ano=data.tm_year;
+                ano=data.tm_year+1900;
                 if(it3->getDebitoCredito()=='D'){
                     arq << it3->getDescricao() << ", Valor = " << it3->getValor() << ", Debito, data: " << dia << "/" << mes << "/" <<ano <<"\n";
                 }else{
@@ -64,25 +64,30 @@ const int Banco::getNovoNumeroConta(){
 }
 
 bool Banco::inserirCliente(const Cliente& cliente){
-    ListaDeClientes::iterator it = std::find(this->clientes.begin(), this->clientes.end(), cliente);
-    if(it == this->clientes.end()){
+    ListaDeClientes::iterator it;
+    Cliente clt=cliente;
+    for (it = this->clientes.begin(); it != this->clientes.end(); it++){
+        if(*it==clt){
+            return 0;
+        }
+    }
         this->clientes.push_back(cliente);
         return 1;
-    }
-    else{
-        return 0;
-    }
 }
 
 bool Banco::excluirCliente(const std::string& cpfCnpj){
     ListaDeClientes::iterator it1;
     ListaDeContas::iterator it2;
+    Cliente clt1,clt2;
+
     for (it1 = this->clientes.begin(); it1 != this->clientes.end(); it1++){
         //Cliente encontrado
         if(it1->getCpfCnpj() == cpfCnpj){
             for (it2 = this->contas.begin(); it2 != this->contas.end(); it2++){
                 //Conta encontrada
-                if(it2->getCliente()==*it1){
+		clt1=*it1;
+		clt2=it2->getCliente();
+                if(clt1==clt2){
                     return 0;
                 }
             }
@@ -184,9 +189,16 @@ void Banco::cpmf(){
     ListaDeMovimentacoes movimetacoesDaSemana;
     ListaDeMovimentacoes:: iterator itM;
     double Cpmf=0;
+
+    time_t agora = time(NULL);
+    tm* dataAtual = localtime(&agora);
+    tm dataFim = {dataAtual->tm_sec,dataAtual->tm_min,dataAtual->tm_hour,dataAtual->tm_mday,dataAtual->tm_mon,dataAtual->tm_year};
+    tm dataInicio = dataFim;
+    dataMaisDias(&dataInicio, -7);
+    
     //percorre a lista de contas
     for(itC= this->contas.begin();itC != this->contas.end();itC++){
-        movimetacoesDaSemana=itC->extratoDatas(inicio,fim);
+        movimetacoesDaSemana=itC->extratoDatas(dataInicio,dataFim);
         //soma todos os valores das movimentacoes de debito
         for(itM=movimetacoesDaSemana.begin();itM != movimetacoesDaSemana.end();itM++){
             if(itM->getDebitoCredito()=='D'){
