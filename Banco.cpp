@@ -11,6 +11,9 @@ void Banco::setDados(){
     ListaDeMovimentacoes:: iterator it3;
     ListaDeMovimentacoes movimentacao;
     Cliente cliente;
+    tm data;
+    int dia,mes,ano;
+
     if (arq.is_open()){
 
         arq < "CLIENTES \n\n";
@@ -31,10 +34,14 @@ void Banco::setDados(){
             arq << "MOVIMENTAÇOES\n";
             movimentacao=it2->getMovimentacoes();
             for(it3 = movimentacao.begin(); it3 != movimentacao.end() ; it3++){
+                data=it3->getDataMovimentacao();
+                dia=data.tm_mday;
+                mes=data.tm_mon+1;
+                ano=data.tm_year;
                 if(it3->getDebitoCredito()=='D'){
-                    arq << it3->getDescricao() << ", Valor = " << it3->getValor() << ", Debito, data: " << it3->getDataMovimentacao() << "\n";
+                    arq << it3->getDescricao() << ", Valor = " << it3->getValor() << ", Debito, data: " << dia << "/" << mes << "/" <<ano <<"\n";
                 }else{
-                    arq << it3->getDescricao() << ", Valor = " << it3->getValor() << ", Credito, data: " << it3->getDataMovimentacao() << "\n";
+                    arq << it3->getDescricao() << ", Valor = " << it3->getValor() << ", Credito, data: " << dia << "/" << mes << "/" <<ano <<"\n";
                 }
             }
             arq << "\n";
@@ -52,8 +59,8 @@ const ListaDeContas Banco::getContas(){
     return this->contas;
 }
 
-const int getNovoNumeroConta(){
-    return this->contas.begin().proximoNumeroConta;
+const int Banco::getNovoNumeroConta(){
+    return this->contas.begin()->getProximoNumeroConta();
 }
 
 bool Banco::inserirCliente(const Cliente& cliente){
@@ -75,7 +82,7 @@ bool Banco::excluirCliente(const std::string& cpfCnpj){
         if(it1->getCpfCnpj() == cpfCnpj){
             for (it2 = this->contas.begin(); it2 != this->contas.end(); it2++){
                 //Conta encontrada
-                if(it2->getCliente()==it1){
+                if(it2->getCliente()==*it1){
                     return 0;
                 }
             }
@@ -188,7 +195,7 @@ void Banco::cpmf(){
         }
         //debita 0.38% da conta
         if(Cpmf!=0){
-            Cpmf=Cpmf*0,0038;
+            Cpmf=Cpmf*0.0038;
             itC->debitar(Cpmf,"Cobranca de CPMF.");
         }
 
