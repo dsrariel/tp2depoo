@@ -4,6 +4,46 @@ Banco::Banco(const std::string& nomeBanco){
     this->nomeBanco = nomeBanco;
 }
 
+void Banco::setDados(){
+    std::ofstream arq("Dados.txt");
+    ListaDeClientes::iterator it1;
+    ListaDeContas::iterator it2;
+    ListaDeMovimentacoes:: iterator it3;
+    ListaDeMovimentacoes movimentacao;
+    Cliente cliente;
+    if (arq.is_open()){
+
+        arq < "CLIENTES \n\n";
+
+        for (it1 = this->clientes.begin(); it1 != this->clientes.end(); it1++){
+            arq << "Nome: " << it1->getNomeCliente() << "\n";
+            arq << "CPF/CPNJ: " << it1->getCpfCnpj() << "\n";
+            arq << "Endereço: " << it1->getEndereco() << "\n";
+            arq << "Telefone: " << it1->getTelefone() << "\n\n";
+        }
+        arq << "CONTAS\n\n";
+
+        for (it2 = this->contas.begin(); it2 != this->contas.end(); it2++){
+            cliente=it2->getCliente();
+            arq << "Cliente: " << cliente.getNomeCliente() << "\n";
+            arq << "Numero da Conta: " << it2->getNumeroConta() << "\n";
+            arq << "Saldo: " << it2->getSaldo() << "\n";
+            arq << "MOVIMENTAÇOES\n";
+            movimentacao=it2->getMovimentacoes();
+            for(it3 = movimentacao.begin(); it3 != movimentacao.end() ; it3++){
+                if(it3->getDebitoCredito()=='D'){
+                    arq << it3->getDescricao() << ", Valor = " << it3->getValor() << ", Debito, data: " << it3->getDataMovimentacao() << "\n";
+                }else{
+                    arq << it3->getDescricao() << ", Valor = " << it3->getValor() << ", Credito, data: " << it3->getDataMovimentacao() << "\n";
+                }
+            }
+            arq << "\n";
+        }
+
+        arq.close();
+    }
+}
+
 const ListaDeClientes  Banco::getClientes(){
     return this->clientes;
 }
