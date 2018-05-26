@@ -151,6 +151,7 @@ bool Banco::sacar (int numeroConta, double valor){
 
 bool Banco::transferencia (int numeroContaOrigem, int numeroContaDestino, double valor){
     ListaDeContas::iterator it,contaO,contaD;
+    std::string descricao;
     for(it= this->contas.begin();it != this->contas.end();it++){
         //encontrou conta de origem
         if(it->getNumeroConta() == numeroContaOrigem){
@@ -163,10 +164,10 @@ bool Banco::transferencia (int numeroContaOrigem, int numeroContaDestino, double
     }
     //as duas contas existem
     if((contaO->getNumeroConta()==numeroContaOrigem) && (contaD->getNumeroConta()==numeroContaDestino)){
-        std::string descricao,str1,str2;
-        descricao="Transferencia para conta " + std::to_string(numeroContaDestino);
         //conta de origem com saldo suficiente, transferencia realizada
-        if(contaO->debitar(valor,descricao)){
+        if(contaO->getSaldo()>=valor){
+	    descricao="Transferencia para conta " + std::to_string(numeroContaDestino);
+	    contaO->debitar(valor,descricao);
             descricao="Transferencia da conta " + std::to_string(numeroContaOrigem);
             contaD->creditar(valor,descricao);
             return 1;
@@ -180,7 +181,9 @@ bool Banco::transferencia (int numeroContaOrigem, int numeroContaDestino, double
 void Banco::tarifa(){
     ListaDeContas::iterator it;
     for(it= this->contas.begin();it != this->contas.end();it++){
-        it->debitar(15,"Cobranca de Tarifa.");
+	//cobra tarifa caso tenha saldo suficiente
+	if(it->getSaldo()>=15)        
+		it->debitar(15,"Cobranca de Tarifa.");
     }
 }
 
@@ -192,8 +195,9 @@ void Banco::cpmf(){
 
     time_t agora = time(NULL);
     tm* dataAtual = localtime(&agora);
+
+    tm dataInicio = {0,0,0,dataAtual->tm_mday,dataAtual->tm_mon,dataAtual->tm_year};
     tm dataFim = {dataAtual->tm_sec,dataAtual->tm_min,dataAtual->tm_hour,dataAtual->tm_mday,dataAtual->tm_mon,dataAtual->tm_year};
-    tm dataInicio = dataFim;
     dataMaisDias(&dataInicio, -7);
     
     //percorre a lista de contas
@@ -205,12 +209,11 @@ void Banco::cpmf(){
                Cpmf=Cpmf+itM->getValor();
             }
         }
+	Cpmf=Cpmf*0.0038;
         //debita 0.38% da conta
-        if(Cpmf!=0){
-            Cpmf=Cpmf*0.0038;
+        if(itC->getSaldo()>=Cpmf){
             itC->debitar(Cpmf,"Cobranca de CPMF.");
         }
-
     }
 }
 
@@ -232,6 +235,16 @@ const ListaDeMovimentacoes Banco::extratoMes(int numeroConta){
         //conta encontrada
          if(it->getNumeroConta() == numeroConta){
             return it->extratoMes();
+         }
+    }
+}
+
+const ListaDeMovimentacoes Banco::extratoDataInicial(int numeroConta, tm inicio){
+    ListaDeContas::iterator it;
+    for(it= this->contas.begin();it != this->contas.end();it++){
+        //conta encontrada
+         if(it->getNumeroConta() == numeroConta){
+            return it->extratoDataInicial(inicio);
          }
     }
 }
