@@ -14,5 +14,7 @@
     A.setTelefone("(98) 3244-7615");
 
     cout << A.getNomeCliente() << " " << A.getCpfCnpj() << " " << A.getEndereco() << " " << A.getTelefone() << endl;
+    cout << "A igual a A? " << (A == A) << endl;
+
     return(0);
  }
