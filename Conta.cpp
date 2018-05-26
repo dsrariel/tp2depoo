@@ -77,7 +77,7 @@ const ListaDeMovimentacoes Conta::extratoDataInicial(const tm dataInicio){
     time_t agora = time(NULL);
     tm* dataAtual = localtime(&agora);
      
-    tm dataFim = {0,0,0,dataAtual->tm_mday,dataAtual->tm_mon,dataAtual->tm_year};
+    tm dataFim = {dataAtual->tm_sec,dataAtual->tm_min,dataAtual->tm_hour,dataAtual->tm_mday,dataAtual->tm_mon,dataAtual->tm_year};
 
     return this->extratoDatas(dataInicio, dataFim);
 }
