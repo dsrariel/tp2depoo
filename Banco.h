@@ -40,6 +40,7 @@ class Banco{
     void cpmf();
     int saldoConta(int numeroConta); ////Retorna -1 caso conta não exista
     const ListaDeMovimentacoes extratoMes(int numeroConta); //Retorna o quê caso a conta não exista?
+    const ListaDeMovimentacoes extratoDataInicial(int numeroConta, tm inicio); //Retorna o quê caso a conta não exista?
     const ListaDeMovimentacoes extratoDatas(int numeroConta , tm inicio, tm fim); //Retorna o quê caso a conta não exista?
 };
 #endif // BANCO_H_INCLUDE
