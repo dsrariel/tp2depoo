@@ -47,3 +47,7 @@ const std::string Cliente::getEndereco(){
 const std::string Cliente::getTelefone(){
     return this->telefone;
 }
+
+bool operator==(const Cliente& A, const Cliente& B){
+    return ((A.getCpfCnpj()==B.getCpfCnpj())&&(A.getEndereco()==B.getEndereco())&&(A.getNomeCliente()==B.getNomeCliente())&&(A.getTelefone()==B.getTelefone()));
+}
