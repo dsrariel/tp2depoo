@@ -14,6 +14,7 @@ class Cliente{
     Cliente(const std::string nomeCliente = "", const std::string cpfCnpj = "", const std::string endereco = "", const std::string telefone = "");
     Cliente(const Cliente& original);
     Cliente& operator=(const Cliente& original);
+    bool operator==(Cliente& A);
 
     //Setters
     void setNomeCliente(const std::string nomeCliente);
@@ -22,12 +23,10 @@ class Cliente{
     void setTelefone(const std::string telefone);
 
     //Getters
-    const std::string getNomeCliente();
-    const std::string getCpfCnpj();
-    const std::string getEndereco();
-    const std::string getTelefone();
+    std::string const getNomeCliente();
+    std::string const getCpfCnpj();
+    std::string const getEndereco();
+    std::string const getTelefone();
 };
-
-bool operator==(const Cliente& A, const Cliente& B);
 
 #endif

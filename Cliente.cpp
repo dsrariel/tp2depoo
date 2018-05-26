@@ -34,20 +34,20 @@ void Cliente::setTelefone(const std::string telefone){
     this->telefone = telefone;
 }
 
-const std::string Cliente::getNomeCliente(){
+std::string const Cliente::getNomeCliente(){
     return this->nomeCliente;
 }
 
-const std::string Cliente::getCpfCnpj(){
+std::string const Cliente::getCpfCnpj(){
     return this->cpfCnpj;
 }
-const std::string Cliente::getEndereco(){
+std::string const Cliente::getEndereco(){
     return this->endereco;
 }
-const std::string Cliente::getTelefone(){
+std::string const Cliente::getTelefone(){
     return this->telefone;
 }
 
-bool operator==(const Cliente& A, const Cliente& B){
-    return ((A.getCpfCnpj()==B.getCpfCnpj())&&(A.getEndereco()==B.getEndereco())&&(A.getNomeCliente()==B.getNomeCliente())&&(A.getTelefone()==B.getTelefone()));
+bool Cliente::operator==(Cliente& A){
+    return ((A.getCpfCnpj()==this->getCpfCnpj())&&(A.getEndereco()==this->getEndereco())&&(A.getNomeCliente()==this->getNomeCliente())&&(A.getTelefone()==this->getTelefone()));
 }
