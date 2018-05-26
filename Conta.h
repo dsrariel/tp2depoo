@@ -37,5 +37,6 @@ class Conta{
 
 //Função que determina se uma data está entre outras duas:
 int dataEntreInicioEFim(const tm data, const tm inicio, const tm fim);
+void dataMaisDias(tm* data, int dias);
 
 #endif

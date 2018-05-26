@@ -82,8 +82,32 @@ const ListaDeMovimentacoes Conta::extratoMes(){
     tm* dataAtual = localtime(&agora);
     
     tm dataInicio = {0,0,0,1,dataAtual->tm_mon,dataAtual->tm_year};
-    tm dataFim = {0,0,0,31,dataAtual->tm_mon,dataAtual->tm_year};
+    tm dataFim = dataInicio;
 
+    int numeroDeDiasDoMes;
+    switch (dataFim.tm_mon)
+    {
+        case 0:
+        case 2:
+        case 4:
+        case 6:
+        case 7:
+        case 9:
+        case 11:
+            numeroDeDiasDoMes = 31;
+            break;
+        case 1:
+            if(dataFim.tm_year%4 == 0)
+                numeroDeDiasDoMes = 29;
+            else
+                numeroDeDiasDoMes = 28;
+            break;
+        default:
+            numeroDeDiasDoMes = 30;
+            break;
+    }
+    
+    dataMaisDias(&dataFim, numeroDeDiasDoMes-1);
     return this->extratoDatas(dataInicio, dataFim);
 }
 
@@ -99,4 +123,10 @@ int dataEntreInicioEFim(const tm data, const tm inicio, const tm fim){
         else{
             return 0;
         }
+}
+
+void dataMaisDias(tm* data, int dias){
+    time_t diasEmSegundos = 24*60*60*dias;
+    time_t dataEmSegundos = mktime(data) + diasEmSegundos;
+    *data = *localtime(&dataEmSegundos);
 }
