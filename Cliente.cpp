@@ -34,17 +34,17 @@ void Cliente::setTelefone(const std::string telefone){
     this->telefone = telefone;
 }
 
-std::string const Cliente::getNomeCliente(){
+std::string Cliente::getNomeCliente(){
     return this->nomeCliente;
 }
 
-std::string const Cliente::getCpfCnpj(){
+std::string Cliente::getCpfCnpj(){
     return this->cpfCnpj;
 }
-std::string const Cliente::getEndereco(){
+std::string Cliente::getEndereco(){
     return this->endereco;
 }
-std::string const Cliente::getTelefone(){
+std::string Cliente::getTelefone(){
     return this->telefone;
 }
 

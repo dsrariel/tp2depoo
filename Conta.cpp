@@ -10,19 +10,19 @@ Conta::Conta(const Cliente &cliente){
 }
 
 //Getters
-const int Conta::getNumeroConta(){
+int Conta::getNumeroConta(){
     return this->numeroConta;
 }
-const int Conta::getProximoNumeroConta(){
+int Conta::getProximoNumeroConta(){
     return this->proximoNumeroConta;
 }
-const double Conta::getSaldo(){
+double Conta::getSaldo(){
     return this->saldo;
 }
-const Cliente Conta::getCliente(){
+Cliente Conta::getCliente(){
     return this->cliente;
 }
-const ListaDeMovimentacoes Conta::getMovimentacoes(){
+ListaDeMovimentacoes Conta::getMovimentacoes(){
     return this->movimentacoes;
 }
 
@@ -107,7 +107,7 @@ const ListaDeMovimentacoes Conta::extratoMes(){
             break;
     }
     
-    dataMaisDias(&dataFim, numeroDeDiasDoMes-1);
+    dataMaisDias(&dataFim, numeroDeDiasDoMes);
     return this->extratoDatas(dataInicio, dataFim);
 }
 
