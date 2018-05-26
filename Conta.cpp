@@ -107,7 +107,7 @@ const ListaDeMovimentacoes Conta::extratoMes(){
             break;
     }
     
-    dataMaisDias(&dataFim, numeroDeDiasDoMes-1);
+    dataMaisDias(&dataFim, numeroDeDiasDoMes);
     return this->extratoDatas(dataInicio, dataFim);
 }
 
