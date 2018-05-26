@@ -4,6 +4,8 @@
 #include <string>
 #include <list>
 #include <algorithm>
+#include <iostream>
+#include <fstream>
 #include "Cliente.h"
 #include "Conta.h"
 
