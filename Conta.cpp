@@ -29,10 +29,12 @@ const ListaDeMovimentacoes Conta::getMovimentacoes(){
 //Outras funções
 void Conta::debitar(const double valor, const std::string descricao){
     Movimentacao movimentacao(descricao, 'D', valor);
+    this->saldo -= valor;
     this->movimentacoes.push_back(movimentacao);
 }
 void Conta::creditar(const double valor, const std::string descricao){
     Movimentacao movimentacao(descricao, 'C', valor);
+    this->saldo += valor;
     this->movimentacoes.push_back(movimentacao);
 }
 
@@ -64,6 +66,15 @@ const ListaDeMovimentacoes Conta::extratoDatas(const tm dataInicio, const tm dat
     }
     
     return movimentacoesDoPeriodo;
+}
+
+const ListaDeMovimentacoes Conta::extratoDataInicial(const tm dataInicio){
+    time_t agora = time(NULL);
+    tm* dataAtual = localtime(&agora);
+     
+    tm dataFim = {0,0,0,dataAtual->tm_mday,dataAtual->tm_mon,dataAtual->tm_year};
+
+    return this->extratoDatas(dataInicio, dataFim);
 }
 
 const ListaDeMovimentacoes Conta::extratoMes(){

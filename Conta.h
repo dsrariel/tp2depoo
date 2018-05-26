@@ -31,6 +31,7 @@ class Conta{
     void debitar(const double valor, const std::string descricao);
     void creditar(const double valor, const std::string descricao);
     const ListaDeMovimentacoes extratoDatas(const tm dataInicio, const tm dataFim);
+    const ListaDeMovimentacoes extratoDataInicial(const tm dataInicio);
     const ListaDeMovimentacoes extratoMes();
 };
 
