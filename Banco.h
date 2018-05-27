@@ -40,7 +40,7 @@ class Banco{
     bool transferencia (int numeroContaOrigem, int numeroContaDestino, double valor); //Retorna True caso contas existam (sucesso) e False caso não (falha)
     void tarifa();//debita, caso tenha saldo suficiente, 15 reais de cada conta
     void cpmf();
-    int saldoConta(int numeroConta); ////Retorna -1 caso conta não exista
+    double saldoConta(int numeroConta); ////Retorna -1 caso conta não exista
     const ListaDeMovimentacoes extratoMes(int numeroConta); //Retorna o quê caso a conta não exista?
     const ListaDeMovimentacoes extratoDataInicial(int numeroConta, tm inicio); //Retorna o quê caso a conta não exista?
     const ListaDeMovimentacoes extratoDatas(int numeroConta , tm inicio, tm fim); //Retorna o quê caso a conta não exista?
