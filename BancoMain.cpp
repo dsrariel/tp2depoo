@@ -45,8 +45,9 @@ int main(){
 	}
 	
 	
-	bnc.transferencia(it1->getNumeroConta, it9->getNumeroConta, 62);
-	cout << "saldo da outra conta: "<<bnc.saldoConta(it9->getNumeroConta()) <<endl;
+	bnc.transferencia(it1->getNumeroConta(), it9->getNumeroConta(), 62);
+	cout << "Saldo da primeira conta: "<<bnc.saldoConta(it1->getNumeroConta()) <<endl;
+	cout << "Saldo da outra conta: "<<bnc.saldoConta(it9->getNumeroConta()) <<endl;
 	
 	bnc.setDados();
 	bnc.excluirConta(it1->getNumeroConta());
