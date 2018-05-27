@@ -183,7 +183,7 @@ void Banco::tarifa(){
     for(it= this->contas.begin();it != this->contas.end();it++){
 	//cobra tarifa caso tenha saldo suficiente
 	if(it->getSaldo()>=15)        
-		it->debitar(15,"Cobranca de Tarifa.");
+		it->debitar(15,"Cobranca de Tarifa");
     }
 }
 
@@ -212,12 +212,12 @@ void Banco::cpmf(){
 	Cpmf=Cpmf*0.0038;
         //debita 0.38% da conta
         if(itC->getSaldo()>=Cpmf){
-            itC->debitar(Cpmf,"Cobranca de CPMF.");
+            itC->debitar(Cpmf,"Cobranca de CPMF");
         }
     }
 }
 
-int Banco::saldoConta(int numeroConta){
+double Banco::saldoConta(int numeroConta){
     ListaDeContas::iterator it;
     for(it= this->contas.begin();it != this->contas.end();it++){
         //conta encontrada
