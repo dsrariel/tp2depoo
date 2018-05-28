@@ -4,6 +4,7 @@
 #include <string>
 #include <list>
 #include <algorithm>
+#include <sstream>
 #include <iostream>
 #include <fstream>
 #include "Cliente.h"
