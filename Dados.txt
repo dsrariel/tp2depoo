@@ -1,0 +1,14 @@
+﻿CLIENTES
+
+Nome: Ariel Ribeiro
+CPF/CPNJ: 053.170.220-00
+Endereço: Rua teste, casa torta, Aeroporto
+Telefone: (31)99999-9999
+
+Nome: Shaka
+CPF/CPNJ: 297.344.427-11
+Endereço: Santuario de Atena, n 6
+Telefone: (31)92233-2244
+
+CONTAS
+
