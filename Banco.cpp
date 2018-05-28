@@ -16,7 +16,7 @@ void Banco::setDados(){
 
     if (arq.is_open()){
 
-        arq << "CLIENTES \n\n";
+        arq << "CLIENTES\n\n";
 
         for (it1 = this->clientes.begin(); it1 != this->clientes.end(); it1++){
             arq << "Nome: " << it1->getNomeCliente() << "\n";
@@ -39,9 +39,9 @@ void Banco::setDados(){
                 mes=data.tm_mon+1;
                 ano=data.tm_year+1900;
                 if(it3->getDebitoCredito()=='D'){
-                    arq << it3->getDescricao() << ", Valor = " << it3->getValor() << ", Debito, data: " << dia << "/" << mes << "/" <<ano <<"\n";
+                    arq << it3->getDescricao() << ", Valor = " << it3->getValor() << ", Debito, Data: " << dia << "/" << mes << "/" <<ano <<"\n";
                 }else{
-                    arq << it3->getDescricao() << ", Valor = " << it3->getValor() << ", Credito, data: " << dia << "/" << mes << "/" <<ano <<"\n";
+                    arq << it3->getDescricao() << ", Valor = " << it3->getValor() << ", Credito, Data: " << dia << "/" << mes << "/" <<ano <<"\n";
                 }
             }
             arq << "\n";
@@ -57,6 +57,101 @@ const ListaDeClientes  Banco::getClientes(){
 
 const ListaDeContas Banco::getContas(){
     return this->contas;
+}
+
+void Banco::getDados(){
+    int numeroConta=0,DIA,MES,ANO;
+    double val,saldo;
+    char DC;
+    std::string linha,nome,cpfCnpj,endereco,telefone,descricao,valor,debitoCredito,data,dia,mes,ano;
+    ListaDeClientes::iterator it;
+    ListaDeMovimentacoes movimentacoes;
+
+    Cliente cliente;
+    std::ifstream arq("Dados.txt");
+
+    if (arq.is_open()){
+        while(!arq.eof()){
+            std::getline(arq,linha);
+            //cria a lista de clientes
+            if(linha=="CLIENTES") {
+                std::getline(arq,linha);
+                while(linha!="CONTAS"){
+
+                    if(linha.size()>0){
+                    nome=linha.erase(0,6);
+                        std::getline(arq,linha);
+                        cpfCnpj=linha.erase(0,10);
+
+                        std::getline(arq,linha);
+                        endereco=linha.erase(0,11);
+
+                        std::getline(arq,linha);
+                        telefone=linha.erase(0,10);
+
+                        cliente=Cliente(nome,cpfCnpj,endereco,telefone);
+                        this->inserirCliente(cliente);
+                    }
+                    std::getline(arq,linha);
+                }
+            }
+            //cria a lista de contas
+            if(linha.size()>0 && linha!="CONTAS"){
+                nome=linha.erase(0,9);
+
+                std::getline(arq,linha);
+                linha.erase(0,17);
+                numeroConta=std::atoi(linha.c_str());
+
+                std::getline(arq,linha);
+                linha.erase(0,7);
+                saldo=std::atof(linha.c_str());
+
+                std::getline(arq,linha);//linha=MOVIMENTACOES
+                std::getline(arq,linha);
+                //tem movimentacoes
+                while(linha.size()>0){
+                    std::istringstream token(linha);
+
+                    std::getline(token,descricao,',');
+                    std::getline(token,valor,',');
+                    std::getline(token,debitoCredito,',');
+                    std::getline(token,data,',');
+
+                    DC=debitoCredito[1];
+
+                    valor.erase(0,9);
+                    val=std::atof(valor.c_str());
+
+                    std::istringstream token1(data);
+                    std::getline(token1,dia,'/');
+                    std::getline(token1,mes,'/');
+                    std::getline(token1,ano,'/');
+                    dia.erase(0,7);
+                    DIA=std::atoi(dia.c_str());
+                    MES=std::atoi(mes.c_str())-1;
+                    ANO=std::atoi(ano.c_str())-1900;
+                    tm dat={0,0,0,DIA,MES,ANO};
+                    //cria lista de movimentacoes
+                    Movimentacao movimentacao=Movimentacao(descricao,DC,val,dat);
+                    movimentacoes.push_back(movimentacao);
+
+                    std::getline(arq,linha);
+                }
+
+                for (it = this->clientes.begin(); it != this->clientes.end(); it++){
+                    //Cliente encontrado
+                    if(it->getNomeCliente()==nome){
+                        cliente=*it;
+                        Conta conta=Conta(cliente,numeroConta,numeroConta+1,saldo,movimentacoes);
+                        this->contas.push_back(conta);
+                    }
+                }
+                movimentacoes.clear();
+            }
+        }
+        arq.close();
+    }
 }
 
 const int Banco::getNovoNumeroConta(){
@@ -182,7 +277,7 @@ void Banco::tarifa(){
     ListaDeContas::iterator it;
     for(it= this->contas.begin();it != this->contas.end();it++){
 	//cobra tarifa caso tenha saldo suficiente
-	if(it->getSaldo()>=15)        
+	if(it->getSaldo()>=15)
 		it->debitar(15,"Cobranca de Tarifa");
     }
 }
@@ -199,7 +294,7 @@ void Banco::cpmf(){
     tm dataInicio = {0,0,0,dataAtual->tm_mday,dataAtual->tm_mon,dataAtual->tm_year};
     tm dataFim = {dataAtual->tm_sec,dataAtual->tm_min,dataAtual->tm_hour,dataAtual->tm_mday,dataAtual->tm_mon,dataAtual->tm_year};
     dataMaisDias(&dataInicio, -7);
-    
+
     //percorre a lista de contas
     for(itC= this->contas.begin();itC != this->contas.end();itC++){
         movimetacoesDaSemana=itC->extratoDatas(dataInicio,dataFim);
@@ -214,6 +309,7 @@ void Banco::cpmf(){
         if(itC->getSaldo()>=Cpmf){
             itC->debitar(Cpmf,"Cobranca de CPMF");
         }
+    Cpmf=0;
     }
 }
 
