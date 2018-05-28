@@ -13,6 +13,7 @@ class Movimentacao{
 
     public:
     Movimentacao(const std::string descricao, const char debitoCredito, const double valor);
+    Movimentacao(const std::string descricao, const char debitoCredito, const double valor, const tm data);
 
     //Getters
     const tm getDataMovimentacao();
