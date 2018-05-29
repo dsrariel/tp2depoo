@@ -54,6 +54,9 @@ int Interface::main(){
             case 6:
                 this->sacar(banco);
                 break;
+            case 7:
+                this->transferir(banco);
+                break;
             case 8:
                 this->cobrarTarifa(banco);
                 break;
@@ -337,7 +340,7 @@ void Interface::saldo(Banco& banco){
 }
 
 void Interface::extrato(Banco& banco){
-    int opcao=4,achou=0, numeroConta,DIA,MES,ANO;
+    int opcao = 4, achou = 0, numeroConta, DIA, MES, ANO;
     ListaDeMovimentacoes movimentacoes;
     ListaDeMovimentacoes::iterator it;
     ListaDeContas contas;
@@ -460,7 +463,7 @@ void Interface::listarClientes(Banco& banco){
     std::cout << std::string(50, '\n');
     std::cout << "12.\t" << "Listar clientes.\n" << std::endl;
 
-    clientes=banco.getClientes();
+    clientes = banco.getClientes();
 
     for (it = clientes.begin(); it != clientes.end(); it++){
         std::cout << "Nome: " << it->getNomeCliente() << "\n";
