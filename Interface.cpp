@@ -80,7 +80,7 @@ int Interface::main(){
         opcao = this->menu(nomeBanco);
     }
 
-    std::cout << nomeBanco << " agradece pela preferência! Volte sempre!";
+    std::cout << "\n" << nomeBanco << " agradece pela preferência! Volte sempre!";
     banco.setDados();
     return 0;
 }
@@ -353,83 +353,95 @@ void Interface::extrato(Banco& banco){
 
     std::cout << "Insira o numero da conta: ";
     std::getline(std::cin, entrada);
-    numeroConta=atoi(entrada.c_str());
+    numeroConta = atoi(entrada.c_str());
 
-    contas=banco.getContas();
+    contas = banco.getContas();
 
-    for(it1= contas.begin();it1 != contas.end();it1++){
+    for(it1 = contas.begin(); it1 != contas.end(); it1++){
         if(it1->getNumeroConta() == numeroConta){
-            achou=1;
+            achou = 1;
         }
     }
 
-    if(achou==1){
+    if(achou == 1){
         while((opcao > 3)||(opcao < 1)){
             std::cout << std::string(50, '\n');
             std::cout << "Selecione o extrato desejado." << std::endl;
-            std::cout << "11-01.\t" << "Extrato do mês." << std::endl;
-            std::cout << "11-02.\t" << "Extrato a partir de uma data inicial." << std::endl;
-            std::cout << "11-03.\t" << "Extrato entre datas específicas." << std::endl;
+            std::cout << "01.\t" << "Extrato do mês." << std::endl;
+            std::cout << "02.\t" << "Extrato a partir de uma data inicial." << std::endl;
+            std::cout << "03.\t" << "Extrato entre datas específicas." << std::endl;
 
             std::getline(std::cin, entrada);
             std::stringstream stream(entrada);
             stream >> opcao;
         }
 
-        if(opcao==1){
-            movimentacoes=banco.extratoMes(numeroConta);
-        }else if(opcao==2){
+        if(opcao == 1){
+            movimentacoes = banco.extratoMes(numeroConta);
             std::cout << std::string(50, '\n');
-            std::cout << "11-02.\t" << "Extrato a partir de uma data inicial." << std::endl;
-            std::cout << "Insira a data inicial [ xx xx xxxx ]: ";
+            std::cout << "01.\t" << "Extrato do mês:\n" << std::endl;
+        }
+        else if(opcao == 2){
+            std::cout << std::string(50, '\n');
+            std::cout << "02.\t" << "Extrato a partir de uma data inicial." << std::endl;
+            std::cout << "Insira a data inicial [xx xx xxxx]: ";
             std::getline(std::cin, data);
 
             std::istringstream token(data);
-            std::getline(token,dia,' ');
-            std::getline(token,mes,' ');
-            std::getline(token,ano,' ');
+            std::getline(token, dia, ' ');
+            std::getline(token, mes, ' ');
+            std::getline(token, ano, ' ');
 
-            DIA=std::atoi(dia.c_str());
-            MES=std::atoi(mes.c_str())-1;
-            ANO=std::atoi(ano.c_str())-1900;
+            DIA = std::atoi(dia.c_str());
+            MES = std::atoi(mes.c_str()) - 1;
+            ANO = std::atoi(ano.c_str()) - 1900;
 
-            tm dataI = {0,0,0,DIA,MES,ANO};
-            movimentacoes=banco.extratoDataInicial(numeroConta,dataI);
-        }else{
+            tm dataInicial = {0, 0, 0, DIA, MES, ANO};
+            movimentacoes = banco.extratoDataInicial(numeroConta, dataInicial);
+            
             std::cout << std::string(50, '\n');
-            std::cout << "11-03.\t" << "Extrato entre datas específicas." << std::endl;
-            std::cout << "Insira a data inicial [ xx xx xxxx ]: ";
+            std::cout << "02.\t" << "Extrato a partir de "<< DIA << "/" << MES+1 << "/" << ANO+1900 << ":\n" << std::endl;
+        }
+        else{
+            std::cout << std::string(50, '\n');
+            std::cout << "03.\t" << "Extrato entre datas específicas." << std::endl;
+            std::cout << "Insira a data inicial [xx xx xxxx]: ";
             std::getline(std::cin, data);
 
             std::istringstream token(data);
-            std::getline(token,dia,' ');
-            std::getline(token,mes,' ');
-            std::getline(token,ano,' ');
+            std::getline(token, dia, ' ');
+            std::getline(token, mes, ' ');
+            std::getline(token, ano, ' ');
 
-            DIA=std::atoi(dia.c_str());
-            MES=std::atoi(mes.c_str())-1;
-            ANO=std::atoi(ano.c_str())-1900;
+            DIA = std::atoi(dia.c_str());
+            MES = std::atoi(mes.c_str()) - 1;
+            ANO = std::atoi(ano.c_str()) - 1900;
 
-            tm dataI = {0,0,0,DIA,MES,ANO};
+            tm dataInicial = {0, 0, 0, DIA, MES, ANO};
 
-            std::cout << "Insira a data final [ xx xx xxxx ]: ";
+            std::cout << "Insira a data final [xx xx xxxx]: ";
             std::getline(std::cin, data);
 
             std::istringstream token1(data);
-            std::getline(token1,dia,' ');
-            std::getline(token1,mes,' ');
-            std::getline(token1,ano,' ');
+            std::getline(token1, dia, ' ');
+            std::getline(token1, mes, ' ');
+            std::getline(token1, ano, ' ');
 
-            DIA=std::atoi(dia.c_str());
-            MES=std::atoi(mes.c_str())-1;
-            ANO=std::atoi(ano.c_str())-1900;
+            DIA = std::atoi(dia.c_str());
+            MES = std::atoi(mes.c_str()) - 1;
+            ANO = std::atoi(ano.c_str()) - 1900;
 
-            tm dataF = {0,0,0,DIA,MES,ANO};
-            movimentacoes=banco.extratoDatas(numeroConta,dataI,dataF);
+            tm dataFinal = {0, 0, 0, DIA, MES, ANO};
+            movimentacoes = banco.extratoDatas(numeroConta, dataInicial, dataFinal);
+            
+            char dataInicialBuffer[20], dataFinalBuffer[20];
+            
+            strftime (dataInicialBuffer, 20, "%d/%m/%Y", &dataInicial);
+            strftime (dataFinalBuffer, 20, "%d/%m/%Y", &dataFinal);
+
+            std::cout << std::string(50, '\n');
+            std::cout << "03.\t" << "Extrato entre " << dataInicialBuffer << " e " << dataFinalBuffer << ":\n" << std::endl;
         }
-        std::cout << std::string(50, '\n');
-
-        std::cout << "Movimentaçoes:\n" << std::endl;
         for(it = movimentacoes.begin(); it != movimentacoes.end(); it++){
             tm dat=it->getDataMovimentacao();
             DIA=dat.tm_mday;
