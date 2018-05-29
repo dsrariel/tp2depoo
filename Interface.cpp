@@ -257,7 +257,7 @@ void Interface::sacar(Banco& banco){
 }
 
 void Interface::transferir(Banco& banco){
-   /* int ContaO,ContaD,valor,acao;
+    int ContaO,ContaD,valor,acao;
     std::string entrada = "";
     std::cout << std::string(50, '\n');
     std::cout << "07.\t" << "Transferencia entre contas." << std::endl;
@@ -284,7 +284,7 @@ void Interface::transferir(Banco& banco){
 
     std::cout << "Pressione enter para voltar ao menu. " << std::endl;
     std::getline(std::cin, entrada);
-    */return;
+    return;
 }
 
 void Interface::cobrarTarifa(Banco& banco){
