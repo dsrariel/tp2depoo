@@ -170,7 +170,7 @@ bool Banco::inserirCliente(const Cliente& cliente){
         return 1;
 }
 
-bool Banco::excluirCliente(const std::string& cpfCnpj){
+int Banco::excluirCliente(const std::string& cpfCnpj){
     ListaDeClientes::iterator it1;
     ListaDeContas::iterator it2;
     Cliente clt1,clt2;
@@ -192,7 +192,7 @@ bool Banco::excluirCliente(const std::string& cpfCnpj){
         }
     }
     //Cliente não encontrado
-    return 0;
+    return -1;
 }
 
 void Banco::inserirConta(const Cliente& cliente){
@@ -226,7 +226,7 @@ bool Banco::depositar (int numeroConta, double valor){
     return 0;
 }
 
-bool Banco::sacar (int numeroConta, double valor){
+int Banco::sacar (int numeroConta, double valor){
     ListaDeContas::iterator it;
     for(it= this->contas.begin();it != this->contas.end();it++){
         //conta encontrada
@@ -241,7 +241,7 @@ bool Banco::sacar (int numeroConta, double valor){
         }
     }
     //conta nao encontrada
-    return 0;
+    return -1;
 }
 
 bool Banco::transferencia (int numeroContaOrigem, int numeroContaDestino, double valor){

@@ -29,7 +29,7 @@ class Conta{
     const ListaDeMovimentacoes getMovimentacoes();
 
     //Outras funções
-    void debitar(const double valor, const std::string descricao);
+    bool debitar(const double valor, const std::string descricao); //Retorna 1 em caso de saldo suficiente e 0 caso não.
     void creditar(const double valor, const std::string descricao);
     const ListaDeMovimentacoes extratoDatas(const tm dataInicio, const tm dataFim);
     const ListaDeMovimentacoes extratoDataInicial(const tm dataInicio);

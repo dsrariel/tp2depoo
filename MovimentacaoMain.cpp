@@ -10,7 +10,9 @@
     valor = A.getValor();
     valor += 30;
 
-    cout << A.getDataMovimentacao() << " " << A.getDescricao() << " " << A.getDebitoCredito() << " " << valor << endl;
+    tm data = A.getDataMovimentacao();
+
+    cout << data.tm_mday << "/" << data.tm_mon+1 << "/" << data.tm_year+1900 << " " << A.getDescricao() << " " << A.getDebitoCredito() << " " << valor << endl;
 
     return(0);
  }
