@@ -116,7 +116,7 @@ const ListaDeMovimentacoes Conta::extratoMes(){
     }
     
     dataMaisDias(&dataFim, numeroDeDiasDoMes);
-    return this->extratoDatas(dataInicio, dataFim);
+return this->extratoDatas(dataInicio, dataFim);
 }
 
 int dataEntreInicioEFim(const tm data, const tm inicio, const tm fim){
