@@ -145,7 +145,8 @@ void Interface::inserirConta(Banco& banco){
         if(entrada==it->getCpfCnpj()){
             cliente=*it;
             banco.inserirConta(cliente);
-            std::cout << "\nConta criada com sucesso! ";
+            std::cout << "\nConta criada com sucesso! "<<std::endl;
+	    std::cout << "Número da Conta: " << banco.getNovoNumeroConta() - 1 << ". ";
             std::cout << "Pressione enter para voltar ao menu. " << std::endl;
             std::getline(std::cin, entrada);
             return;
@@ -158,21 +159,34 @@ void Interface::inserirConta(Banco& banco){
 }
 
 void Interface::excluirCliente(Banco& banco){
-    std::string entrada = "";
+    int opcao=3;
+    std::string entrada = "",resposta;
     std::cout << std::string(50, '\n');
     std::cout << "03.\t" << "Excluir cliente." << std::endl;
 
     std::cout << "CPF/CNPJ [xxx.xxx.xxx-xx]: ";
     std::getline(std::cin, entrada);
 
-    int acao=banco.excluirCliente(entrada);
-    //nao possui conta
-    if(acao==1){
-        std::cout << "\nCliente excluído com sucesso! ";
-    }else if(acao==0){
-        std::cout << "\nCliente possui conta, não é possivel excluí-lo. ";
-    }else{
-        std::cout << "\nCliente não é cadastrado no Banco. ";
+    while(opcao != 1 && opcao != 2){
+ 	std::cout << std::string(50, '\n');
+    	std::cout << "03.\t" << "Excluir cliente." << std::endl;
+	std::cout << "Voce realmente deseja excluir o cliente com CPF/CNPJ " << entrada << " ? [Sim=1, Não=2]"<<std::endl;
+	std::getline(std::cin, resposta);
+	std::stringstream stream(resposta);
+	stream >> opcao;
+    }
+    std::cout << std::string(50, '\n');
+    if(opcao==1){
+	std::cout << "03.\t" << "Excluir cliente." << std::endl;
+	int acao=banco.excluirCliente(entrada);
+	//nao possui conta
+	if(acao==1){
+	    std::cout << "\nCliente excluído com sucesso! ";
+	}else if(acao==0){
+	    std::cout << "\nCliente possui conta, não é possivel excluí-lo. ";
+	}else{
+	    std::cout << "\nCliente não é cadastrado no Banco. ";
+	}
     }
     std::cout << "Pressione enter para voltar ao menu. " << std::endl;
     std::getline(std::cin, entrada);
@@ -180,7 +194,7 @@ void Interface::excluirCliente(Banco& banco){
 }
 
 void Interface::excluirConta(Banco& banco){
-    int numeroConta,acao;
+    int numeroConta,acao,opcao=3;
 
     std::string entrada = "";
     std::cout << std::string(50, '\n');
@@ -190,12 +204,25 @@ void Interface::excluirConta(Banco& banco){
     std::getline(std::cin, entrada);
 
     numeroConta=std::atoi(entrada.c_str());
-    acao=banco.excluirConta(numeroConta);
+    
+    while(opcao != 1 && opcao != 2){
+ 	std::cout << std::string(50, '\n');
+    	std::cout << "04.\t" << "Excluir conta." << std::endl;
+	std::cout << "Voce realmente deseja excluir a conta de numero " << numeroConta << " ? [Sim=1, Não=2]"<<std::endl;
+	std::getline(std::cin, entrada);
+	std::stringstream stream(entrada);
+	stream >> opcao;
+    }
+    std::cout << std::string(50, '\n');
+    if(opcao==1){
+	std::cout << "04.\t" << "Excluir conta." << std::endl;
+	acao=banco.excluirConta(numeroConta);
 
-    if(acao==1){
-        std::cout << "\nConta excluída com sucesso! ";
-    }else{
-        std::cout << "\nConta inválida. ";
+	if(acao==1){
+            std::cout << "\nConta excluída com sucesso! ";
+	}else{
+	    std::cout << "\nConta inválida. ";
+	}
     }
     std::cout << "Pressione enter para voltar ao menu. " << std::endl;
     std::getline(std::cin, entrada);
@@ -203,8 +230,8 @@ void Interface::excluirConta(Banco& banco){
 }
 
 void Interface::depositar(Banco& banco){
-    int numeroConta,acao;
-    double valor;
+    int numeroConta,acao,opcao=3;
+    double valor,saldo;
 
     std::string entrada = "";
     std::cout << std::string(50, '\n');
@@ -218,12 +245,26 @@ void Interface::depositar(Banco& banco){
     std::getline(std::cin, entrada);
     valor=atof(entrada.c_str());
 
-    acao=banco.depositar(numeroConta,valor);
+    while(opcao != 1 && opcao != 2){
+ 	std::cout << std::string(50, '\n');
+    	std::cout << "05.\t" << "Deposito." << std::endl;
+	std::cout << "Você deseja depositar "<< valor <<" reais na conta de número " << numeroConta << " ? [Sim=1, Não=2]"<<std::endl;
+	std::getline(std::cin, entrada);
+	std::stringstream stream(entrada);
+	stream >> opcao;
+    }
+    std::cout << std::string(50, '\n');
+    if(opcao==1){
+        std::cout << "05.\t" << "Deposito." << std::endl;
+        acao=banco.depositar(numeroConta,valor);
 
-    if(acao==1){
-        std::cout << "\nDeposito realizado com sucesso! ";
-    }else{
-        std::cout << "\nConta inválida. ";
+        if(acao==1){
+            std::cout << "\nDeposito realizado com sucesso! ";
+    	    saldo=banco.saldoConta(numeroConta);
+	    std::cout << "\nSaldo atual: "<< saldo << " reais. ";
+        }else{
+            std::cout << "\nConta inválida. ";
+        }
     }
     std::cout << "Pressione enter para voltar ao menu. " << std::endl;
     std::getline(std::cin, entrada);
@@ -231,8 +272,8 @@ void Interface::depositar(Banco& banco){
 }
 
 void Interface::sacar(Banco& banco){
-    int numeroConta,acao;
-    double valor;
+    int numeroConta,acao,opcao=3;
+    double valor,saldo;
     std::string entrada = "";
     std::cout << std::string(50, '\n');
     std::cout << "06.\t" << "Saque." << std::endl;
@@ -241,18 +282,45 @@ void Interface::sacar(Banco& banco){
     std::getline(std::cin, entrada);
     numeroConta=atoi(entrada.c_str());
 
+    saldo=banco.saldoConta(numeroConta);
+
+    if(saldo==-1){
+	std::cout << "\nConta inválida. ";
+	std::cout << "Pressione enter para voltar ao menu. " << std::endl;
+        std::getline(std::cin, entrada);
+        return;
+    }
+
+    std::cout << "\nSaldo atual: "<< saldo << " reais. "<<std::endl;
+
     std::cout << "\nInsira o valor do saque: ";
     std::getline(std::cin, entrada);
     valor=atof(entrada.c_str());
 
-    acao=banco.sacar(numeroConta,valor);
+    while(opcao != 1 && opcao != 2){
+ 	std::cout << std::string(50, '\n');
+    	std::cout << "06.\t" << "Saque." << std::endl;
+	std::cout << "Você deseja sacar "<< valor <<" reais da conta de número " << numeroConta << " ? [Sim=1, Não=2]"<<std::endl;
+	std::getline(std::cin, entrada);
+	std::stringstream stream(entrada);
+	stream >> opcao;
+    }
+    std::cout << std::string(50, '\n');
+    if(opcao==1){
+        std::cout << "06.\t" << "Saque." << std::endl;
+        acao=banco.sacar(numeroConta,valor);
 
-    if(acao==1){
-        std::cout << "\nSaque realizado com sucesso! ";
-    }else if(acao==0){
-        std::cout << "\nSaldo insuficiente. ";
-    }else{
-        std::cout << "\nConta inválida. ";
+        if(acao==1){
+            std::cout << "\nSaque realizado com sucesso! ";
+	    saldo=banco.saldoConta(numeroConta);
+	    std::cout << "\nSaldo atual: "<< saldo << " reais. ";
+        }else if(acao==0){
+            std::cout << "\nSaldo insuficiente. ";
+	    saldo=banco.saldoConta(numeroConta);
+	    std::cout << "\nSaldo atual: "<< saldo << " reais. ";
+        }else{
+            std::cout << "\nConta inválida. ";
+        }
     }
     std::cout << "Pressione enter para voltar ao menu. " << std::endl;
     std::getline(std::cin, entrada);
@@ -261,7 +329,8 @@ void Interface::sacar(Banco& banco){
 }
 
 void Interface::transferir(Banco& banco){
-    int ContaO,ContaD,valor,acao;
+    int ContaO,ContaD,acao,opcao=3;
+    double valor,saldo;
     std::string entrada = "";
     std::cout << std::string(50, '\n');
     std::cout << "07.\t" << "Transferencia entre contas." << std::endl;
@@ -274,18 +343,42 @@ void Interface::transferir(Banco& banco){
     std::getline(std::cin, entrada);
     ContaD=atoi(entrada.c_str());
 
+    saldo=banco.saldoConta(numeroContaO);
+
+    if(saldo==-1){
+	std::cout << "\nConta inválida. ";
+	std::cout << "Pressione enter para voltar ao menu. " << std::endl;
+        std::getline(std::cin, entrada);
+        return;
+    }
+
+    std::cout << "\nSaldo atual: "<< saldo << " reais. ";
+
     std::cout << "\nInsira o valor da transferência: ";
     std::getline(std::cin, entrada);
     valor=atof(entrada.c_str());
 
-    acao=banco.transferencia(ContaO,ContaD,valor);
-
-    if(acao==1){
-        std::cout << "\nTransferência realizada com sucesso! ";
-    }else{
-        std::cout << "\nConta inválida. ";
+    while(opcao != 1 && opcao != 2){
+ 	std::cout << std::string(50, '\n');
+    	std::cout << "07.\t" << "Transferência entre contas." << std::endl;
+	std::cout << "Você deseja transferir "<< valor <<" reais da conta de número " << numeroContaO << " para conta de número << numeroContaD << ? [Sim=1, Não=2]"<<std::endl;
+	std::getline(std::cin, entrada);
+	std::stringstream stream(entrada);
+	stream >> opcao;
     }
+    std::cout << std::string(50, '\n');
+    if(opcao==1){
+	std::cout << "07.\t" << "Transferencia entre contas." << std::endl;
+        acao=banco.transferencia(ContaO,ContaD,valor);
 
+        if(acao==1){
+            std::cout << "\nTransferência realizada com sucesso! ";
+	    saldo=banco.saldoConta(numeroConta);
+	    std::cout << "\nSaldo atual: "<< saldo << " reais. ";
+        }else{
+            std::cout << "\nConta inválida. ";
+        }
+    }
     std::cout << "Pressione enter para voltar ao menu. " << std::endl;
     std::getline(std::cin, entrada);
     return;
@@ -333,7 +426,7 @@ void Interface::saldo(Banco& banco){
     if(saldo==-1){
         std::cout << "\nConta inválida. ";
     }else{
-        std::cout << "\nO saldo atual é: "<<saldo<< " reais. ";
+        std::cout << "\nO saldo atual da conta de número "<< numeroConta <<" é: "<<saldo<< " reais. ";
     }
     std::cout << "Pressione enter para voltar ao menu. " << std::endl;
     std::getline(std::cin, entrada);
@@ -379,7 +472,7 @@ void Interface::extrato(Banco& banco){
         if(opcao == 1){
             movimentacoes = banco.extratoMes(numeroConta);
             std::cout << std::string(50, '\n');
-            std::cout << "01.\t" << "Extrato do mês:\n" << std::endl;
+            std::cout << "01.\t" << "Extrato do mês da conta de numero "<< numeroConta <<":\n" << std::endl;
         }
         else if(opcao == 2){
             std::cout << std::string(50, '\n');
@@ -400,7 +493,7 @@ void Interface::extrato(Banco& banco){
             movimentacoes = banco.extratoDataInicial(numeroConta, dataInicial);
             
             std::cout << std::string(50, '\n');
-            std::cout << "02.\t" << "Extrato a partir de "<< DIA << "/" << MES+1 << "/" << ANO+1900 << ":\n" << std::endl;
+            std::cout << "02.\t" << "Extrato a partir de "<< DIA << "/" << MES+1 << "/" << ANO+1900 <<" da conta de numero "<< numeroConta <<":\n" << std::endl;
         }
         else{
             std::cout << std::string(50, '\n');
@@ -440,7 +533,7 @@ void Interface::extrato(Banco& banco){
             strftime (dataFinalBuffer, 20, "%d/%m/%Y", &dataFinal);
 
             std::cout << std::string(50, '\n');
-            std::cout << "03.\t" << "Extrato entre " << dataInicialBuffer << " e " << dataFinalBuffer << ":\n" << std::endl;
+            std::cout << "03.\t" << "Extrato entre " << dataInicialBuffer << " e " << dataFinalBuffer <<" da conta de numero "<< numeroConta <<":\n" << std::endl;
         }
         for(it = movimentacoes.begin(); it != movimentacoes.end(); it++){
             tm dat=it->getDataMovimentacao();
