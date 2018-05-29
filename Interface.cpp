@@ -80,6 +80,7 @@ int Interface::main(){
         opcao = this->menu(nomeBanco);
     }
 
+    std::cout << nomeBanco << " agradece pela preferência! Volte sempre!";
     banco.setDados();
     return 0;
 }
