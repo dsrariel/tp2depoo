@@ -11,9 +11,12 @@ void Banco::setDados(){
     ListaDeMovimentacoes:: iterator it3;
     ListaDeMovimentacoes movimentacao;
     Cliente cliente;
+    tm data;
+    int dia,mes,ano;
+
     if (arq.is_open()){
 
-        arq < "CLIENTES \n\n";
+        arq << "CLIENTES\n\n";
 
         for (it1 = this->clientes.begin(); it1 != this->clientes.end(); it1++){
             arq << "Nome: " << it1->getNomeCliente() << "\n";
@@ -31,10 +34,14 @@ void Banco::setDados(){
             arq << "MOVIMENTAÇOES\n";
             movimentacao=it2->getMovimentacoes();
             for(it3 = movimentacao.begin(); it3 != movimentacao.end() ; it3++){
+                data=it3->getDataMovimentacao();
+                dia=data.tm_mday;
+                mes=data.tm_mon+1;
+                ano=data.tm_year+1900;
                 if(it3->getDebitoCredito()=='D'){
-                    arq << it3->getDescricao() << ", Valor = " << it3->getValor() << ", Debito, data: " << it3->getDataMovimentacao() << "\n";
+                    arq << it3->getDescricao() << ", Valor = " << it3->getValor() << ", Debito, Data: " << dia << "/" << mes << "/" <<ano <<"\n";
                 }else{
-                    arq << it3->getDescricao() << ", Valor = " << it3->getValor() << ", Credito, data: " << it3->getDataMovimentacao() << "\n";
+                    arq << it3->getDescricao() << ", Valor = " << it3->getValor() << ", Credito, Data: " << dia << "/" << mes << "/" <<ano <<"\n";
                 }
             }
             arq << "\n";
@@ -52,30 +59,130 @@ const ListaDeContas Banco::getContas(){
     return this->contas;
 }
 
-const int getNovoNumeroConta(){
-    return this->contas.begin().proximoNumeroConta;
+void Banco::getDados(){
+    int numeroConta=0,DIA,MES,ANO;
+    double val,saldo;
+    char DC;
+    std::string linha,nome,cpfCnpj,endereco,telefone,descricao,valor,debitoCredito,data,dia,mes,ano;
+    ListaDeClientes::iterator it;
+    ListaDeMovimentacoes movimentacoes;
+
+    Cliente cliente;
+    std::ifstream arq("Dados.txt");
+
+    if (arq.is_open()){
+        while(!arq.eof()){
+            std::getline(arq,linha);
+            //cria a lista de clientes
+            if(linha=="CLIENTES") {
+                std::getline(arq,linha);
+                while(linha!="CONTAS"){
+
+                    if(linha.size()>0){
+                    nome=linha.erase(0,6);
+                        std::getline(arq,linha);
+                        cpfCnpj=linha.erase(0,10);
+
+                        std::getline(arq,linha);
+                        endereco=linha.erase(0,11);
+
+                        std::getline(arq,linha);
+                        telefone=linha.erase(0,10);
+
+                        cliente=Cliente(nome,cpfCnpj,endereco,telefone);
+                        this->inserirCliente(cliente);
+                    }
+                    std::getline(arq,linha);
+                }
+            }
+            //cria a lista de contas
+            if(linha.size()>0 && linha!="CONTAS"){
+                nome=linha.erase(0,9);
+
+                std::getline(arq,linha);
+                linha.erase(0,17);
+                numeroConta=std::atoi(linha.c_str());
+
+                std::getline(arq,linha);
+                linha.erase(0,7);
+                saldo=std::atof(linha.c_str());
+
+                std::getline(arq,linha);//linha=MOVIMENTACOES
+                std::getline(arq,linha);
+                //tem movimentacoes
+                while(linha.size()>0){
+                    std::istringstream token(linha);
+
+                    std::getline(token,descricao,',');
+                    std::getline(token,valor,',');
+                    std::getline(token,debitoCredito,',');
+                    std::getline(token,data,',');
+
+                    DC=debitoCredito[1];
+
+                    valor.erase(0,9);
+                    val=std::atof(valor.c_str());
+
+                    std::istringstream token1(data);
+                    std::getline(token1,dia,'/');
+                    std::getline(token1,mes,'/');
+                    std::getline(token1,ano,'/');
+                    dia.erase(0,7);
+                    DIA=std::atoi(dia.c_str());
+                    MES=std::atoi(mes.c_str())-1;
+                    ANO=std::atoi(ano.c_str())-1900;
+                    tm dat={0,0,0,DIA,MES,ANO};
+                    //cria lista de movimentacoes
+                    Movimentacao movimentacao=Movimentacao(descricao,DC,val,dat);
+                    movimentacoes.push_back(movimentacao);
+
+                    std::getline(arq,linha);
+                }
+
+                for (it = this->clientes.begin(); it != this->clientes.end(); it++){
+                    //Cliente encontrado
+                    if(it->getNomeCliente()==nome){
+                        cliente=*it;
+                        Conta conta=Conta(cliente,numeroConta,numeroConta+1,saldo,movimentacoes);
+                        this->contas.push_back(conta);
+                    }
+                }
+                movimentacoes.clear();
+            }
+        }
+        arq.close();
+    }
+}
+
+const int Banco::getNovoNumeroConta(){
+    return this->contas.begin()->getProximoNumeroConta();
 }
 
 bool Banco::inserirCliente(const Cliente& cliente){
-    ListaDeClientes::iterator it = std::find(this->clientes.begin(), this->clientes.end(), cliente);
-    if(it == this->clientes.end()){
+    ListaDeClientes::iterator it;
+    Cliente clt=cliente;
+    for (it = this->clientes.begin(); it != this->clientes.end(); it++){
+        if(*it==clt){
+            return 0;
+        }
+    }
         this->clientes.push_back(cliente);
         return 1;
-    }
-    else{
-        return 0;
-    }
 }
 
-bool Banco::excluirCliente(const std::string& cpfCnpj){
+int Banco::excluirCliente(const std::string& cpfCnpj){
     ListaDeClientes::iterator it1;
     ListaDeContas::iterator it2;
+    Cliente clt1,clt2;
+
     for (it1 = this->clientes.begin(); it1 != this->clientes.end(); it1++){
         //Cliente encontrado
         if(it1->getCpfCnpj() == cpfCnpj){
             for (it2 = this->contas.begin(); it2 != this->contas.end(); it2++){
                 //Conta encontrada
-                if(it2->getCliente()==it1){
+		clt1=*it1;
+		clt2=it2->getCliente();
+                if(clt1==clt2){
                     return 0;
                 }
             }
@@ -85,7 +192,7 @@ bool Banco::excluirCliente(const std::string& cpfCnpj){
         }
     }
     //Cliente não encontrado
-    return 0;
+    return -1;
 }
 
 void Banco::inserirConta(const Cliente& cliente){
@@ -119,7 +226,7 @@ bool Banco::depositar (int numeroConta, double valor){
     return 0;
 }
 
-bool Banco::sacar (int numeroConta, double valor){
+int Banco::sacar (int numeroConta, double valor){
     ListaDeContas::iterator it;
     for(it= this->contas.begin();it != this->contas.end();it++){
         //conta encontrada
@@ -134,11 +241,12 @@ bool Banco::sacar (int numeroConta, double valor){
         }
     }
     //conta nao encontrada
-    return 0;
+    return -1;
 }
 
 bool Banco::transferencia (int numeroContaOrigem, int numeroContaDestino, double valor){
     ListaDeContas::iterator it,contaO,contaD;
+    std::string descricao;
     for(it= this->contas.begin();it != this->contas.end();it++){
         //encontrou conta de origem
         if(it->getNumeroConta() == numeroContaOrigem){
@@ -151,10 +259,10 @@ bool Banco::transferencia (int numeroContaOrigem, int numeroContaDestino, double
     }
     //as duas contas existem
     if((contaO->getNumeroConta()==numeroContaOrigem) && (contaD->getNumeroConta()==numeroContaDestino)){
-        std::string descricao,str1,str2;
-        descricao="Transferencia para conta " + std::to_string(numeroContaDestino);
         //conta de origem com saldo suficiente, transferencia realizada
-        if(contaO->debitar(valor,descricao)){
+        if(contaO->getSaldo()>=valor){
+	    descricao="Transferencia para conta " + std::to_string(numeroContaDestino);
+	    contaO->debitar(valor,descricao);
             descricao="Transferencia da conta " + std::to_string(numeroContaOrigem);
             contaD->creditar(valor,descricao);
             return 1;
@@ -168,7 +276,9 @@ bool Banco::transferencia (int numeroContaOrigem, int numeroContaDestino, double
 void Banco::tarifa(){
     ListaDeContas::iterator it;
     for(it= this->contas.begin();it != this->contas.end();it++){
-        it->debitar(15,"Cobranca de Tarifa.");
+	//cobra tarifa caso tenha saldo suficiente
+	if(it->getSaldo()>=15)
+		it->debitar(15,"Cobranca de Tarifa");
     }
 }
 
@@ -177,25 +287,33 @@ void Banco::cpmf(){
     ListaDeMovimentacoes movimetacoesDaSemana;
     ListaDeMovimentacoes:: iterator itM;
     double Cpmf=0;
+
+    time_t agora = time(NULL);
+    tm* dataAtual = localtime(&agora);
+
+    tm dataInicio = {0,0,0,dataAtual->tm_mday,dataAtual->tm_mon,dataAtual->tm_year};
+    tm dataFim = {dataAtual->tm_sec,dataAtual->tm_min,dataAtual->tm_hour,dataAtual->tm_mday,dataAtual->tm_mon,dataAtual->tm_year};
+    dataMaisDias(&dataInicio, -7);
+
     //percorre a lista de contas
     for(itC= this->contas.begin();itC != this->contas.end();itC++){
-        movimetacoesDaSemana=itC->extratoDatas(inicio,fim);
+        movimetacoesDaSemana=itC->extratoDatas(dataInicio,dataFim);
         //soma todos os valores das movimentacoes de debito
         for(itM=movimetacoesDaSemana.begin();itM != movimetacoesDaSemana.end();itM++){
             if(itM->getDebitoCredito()=='D'){
                Cpmf=Cpmf+itM->getValor();
             }
         }
+	Cpmf=Cpmf*0.0038;
         //debita 0.38% da conta
-        if(Cpmf!=0){
-            Cpmf=Cpmf*0,0038;
-            itC->debitar(Cpmf,"Cobranca de CPMF.");
+        if(itC->getSaldo()>=Cpmf){
+            itC->debitar(Cpmf,"Cobranca de CPMF");
         }
-
+    Cpmf=0;
     }
 }
 
-int Banco::saldoConta(int numeroConta){
+double Banco::saldoConta(int numeroConta){
     ListaDeContas::iterator it;
     for(it= this->contas.begin();it != this->contas.end();it++){
         //conta encontrada
@@ -213,6 +331,16 @@ const ListaDeMovimentacoes Banco::extratoMes(int numeroConta){
         //conta encontrada
          if(it->getNumeroConta() == numeroConta){
             return it->extratoMes();
+         }
+    }
+}
+
+const ListaDeMovimentacoes Banco::extratoDataInicial(int numeroConta, tm inicio){
+    ListaDeContas::iterator it;
+    for(it= this->contas.begin();it != this->contas.end();it++){
+        //conta encontrada
+         if(it->getNumeroConta() == numeroConta){
+            return it->extratoDataInicial(inicio);
          }
     }
 }

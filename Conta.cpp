@@ -9,6 +9,14 @@ Conta::Conta(const Cliente &cliente){
     this->cliente = cliente;
 }
 
+Conta::Conta(const Cliente &cliente,int numeroConta,int proximoNumeroConta, double saldo, const ListaDeMovimentacoes& movimentacoes){
+    this->numeroConta = numeroConta;
+    this->proximoNumeroConta = proximoNumeroConta;
+    this->saldo = saldo;
+    this->cliente = cliente;
+    this->movimentacoes = movimentacoes;
+}
+
 //Getters
 const int Conta::getNumeroConta(){
     return this->numeroConta;
@@ -112,8 +120,8 @@ const ListaDeMovimentacoes Conta::extratoMes(){
             break;
     }
     
-    dataMaisDias(&dataFim, numeroDeDiasDoMes-1);
-    return this->extratoDatas(dataInicio, dataFim);
+    dataMaisDias(&dataFim, numeroDeDiasDoMes);
+return this->extratoDatas(dataInicio, dataFim);
 }
 
 int dataEntreInicioEFim(const tm data, const tm inicio, const tm fim){

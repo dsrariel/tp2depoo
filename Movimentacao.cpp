@@ -11,7 +11,12 @@ Movimentacao::Movimentacao(const std::string descricao, const char debitoCredito
     this->debitoCredito = debitoCredito;
     this->valor = valor;
 }
-
+Movimentacao::Movimentacao(const std::string descricao, const char debitoCredito, const double valor, const tm data){
+    this->descricao = descricao;
+    this->debitoCredito = debitoCredito;
+    this->valor = valor;
+    this->dataMovimentacao = data;
+}
 const tm Movimentacao::getDataMovimentacao(){
     return this->dataMovimentacao;
 }
@@ -24,4 +29,3 @@ const char Movimentacao::getDebitoCredito(){
 const double Movimentacao::getValor(){
     return this->valor;
 }
-
