@@ -14,7 +14,7 @@ class Interface{
     void excluirConta(Banco& banco);
     void depositar(Banco& banco);
     void sacar(Banco& banco);
-    void tranferir(Banco& banco);
+    void transferir(Banco& banco);
     void cobrarTarifa(Banco& banco);
     void cobrarCPMF(Banco& banco);
     void saldo(Banco& banco);
