@@ -27,7 +27,7 @@ const int banco::Conta::getProximoNumeroConta(){
 const double banco::Conta::getSaldo(){
     return this->saldo;
 }
-const Cliente banco::Conta::getCliente(){
+const banco::Cliente banco::Conta::getCliente(){
     return this->cliente;
 }
 const ListaDeMovimentacoes banco::Conta::getMovimentacoes(){
@@ -124,7 +124,7 @@ const ListaDeMovimentacoes banco::Conta::extratoMes(){
 return this->extratoDatas(dataInicio, dataFim);
 }
 
-int dataEntreInicioEFim(const tm data, const tm inicio, const tm fim){
+int banco::dataEntreInicioEFim(const tm data, const tm inicio, const tm fim){
         tm data_aux = data, inicio_aux = inicio, fim_aux = fim;
         time_t  time_inicio = mktime(&inicio_aux), 
                 time_fim = mktime(&fim_aux),
@@ -138,7 +138,7 @@ int dataEntreInicioEFim(const tm data, const tm inicio, const tm fim){
         }
 }
 
-void dataMaisDias(tm* data, int dias){
+void banco::dataMaisDias(tm* data, int dias){
     time_t diasEmSegundos = 24*60*60*dias;
     time_t dataEmSegundos = mktime(data) + diasEmSegundos;
     *data = *localtime(&dataEmSegundos);
