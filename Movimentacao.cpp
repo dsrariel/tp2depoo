@@ -1,6 +1,6 @@
 #include "Movimentacao.h"
 
-Movimentacao::Movimentacao(const std::string descricao, const char debitoCredito, const double valor){
+banco::Movimentacao::Movimentacao(const std::string descricao, const char debitoCredito, const double valor){
     time_t agora = time(NULL);
     tm* dataAtual = localtime(&agora);
     
@@ -11,21 +11,21 @@ Movimentacao::Movimentacao(const std::string descricao, const char debitoCredito
     this->debitoCredito = debitoCredito;
     this->valor = valor;
 }
-Movimentacao::Movimentacao(const std::string descricao, const char debitoCredito, const double valor, const tm data){
+banco::Movimentacao::Movimentacao(const std::string descricao, const char debitoCredito, const double valor, const tm data){
     this->descricao = descricao;
     this->debitoCredito = debitoCredito;
     this->valor = valor;
     this->dataMovimentacao = data;
 }
-const tm Movimentacao::getDataMovimentacao(){
+const tm banco::Movimentacao::getDataMovimentacao(){
     return this->dataMovimentacao;
 }
-const std::string Movimentacao::getDescricao(){
+const std::string banco::Movimentacao::getDescricao(){
     return this->descricao;
 }
-const char Movimentacao::getDebitoCredito(){
+const char banco::Movimentacao::getDebitoCredito(){
     return this->debitoCredito;
 }
-const double Movimentacao::getValor(){
+const double banco::Movimentacao::getValor(){
     return this->valor;
 }

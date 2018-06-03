@@ -2,6 +2,7 @@
 #include "Movimentacao.h"
 
  using namespace std;
+ using namespace banco;
 
  int main(){
     Movimentacao A("Movimentacao de teste", 'D', 232.00);
