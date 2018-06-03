@@ -1,6 +1,6 @@
 #include "Interface.h"
 
-int banco::Interface::menu(std::string nomeBanco){
+int Interface::menu(std::string nomeBanco){
     std::string entrada = "";
     int opcao = 15;
     while((opcao > 14)||(opcao < 1)){
@@ -28,7 +28,7 @@ int banco::Interface::menu(std::string nomeBanco){
     return opcao;
 }
 
-int banco::Interface::main(){
+int Interface::main(){
     std::string nomeBanco = "NU Banco";
     Banco banco(nomeBanco);
     banco.getDados();
@@ -85,7 +85,7 @@ int banco::Interface::main(){
     return 0;
 }
 
-void banco::Interface::inserirCliente(Banco& banco){
+void Interface::inserirCliente(Banco& banco){
     Cliente cliente;
     std::string entrada = "";
     std::cout << std::string(50, '\n');
@@ -125,7 +125,7 @@ void banco::Interface::inserirCliente(Banco& banco){
     return;
 }
 
-void banco::Interface::inserirConta(Banco& banco){
+void Interface::inserirConta(Banco& banco){
     Cliente cliente;
     ListaDeClientes clientes;
     ListaDeClientes::iterator it;
@@ -159,7 +159,7 @@ void banco::Interface::inserirConta(Banco& banco){
     return;
 }
 
-void banco::Interface::excluirCliente(Banco& banco){
+void Interface::excluirCliente(Banco& banco){
     int opcao=3;
     std::string entrada = "",resposta;
     std::cout << std::string(50, '\n');
@@ -194,7 +194,7 @@ void banco::Interface::excluirCliente(Banco& banco){
     return;
 }
 
-void banco::Interface::excluirConta(Banco& banco){
+void Interface::excluirConta(Banco& banco){
     int numeroConta, acao, opcao=3;
 
     std::string entrada = "";
@@ -230,7 +230,7 @@ void banco::Interface::excluirConta(Banco& banco){
     return;
 }
 
-void banco::Interface::depositar(Banco& banco){
+void Interface::depositar(Banco& banco){
     int numeroConta,acao,opcao=3;
     double valor,saldo;
 
@@ -272,7 +272,7 @@ void banco::Interface::depositar(Banco& banco){
     return;
 }
 
-void banco::Interface::sacar(Banco& banco){
+void Interface::sacar(Banco& banco){
     int numeroConta,acao,opcao=3;
     double valor,saldo;
     std::string entrada = "";
@@ -329,7 +329,7 @@ void banco::Interface::sacar(Banco& banco){
 
 }
 
-void banco::Interface::transferir(Banco& banco){
+void Interface::transferir(Banco& banco){
     int ContaO, ContaD, acao, opcao = 3;
     double valor, saldo;
     std::string entrada = "";
@@ -387,7 +387,7 @@ void banco::Interface::transferir(Banco& banco){
     return;
 }
 
-void banco::Interface::cobrarTarifa(Banco& banco){
+void Interface::cobrarTarifa(Banco& banco){
     std::string entrada = "";
     std::cout << std::string(50, '\n');
     std::cout << "08.\t" << "Cobrar tarifa." << std::endl;
@@ -400,7 +400,7 @@ void banco::Interface::cobrarTarifa(Banco& banco){
     return;
 }
 
-void banco::Interface::cobrarCPMF(Banco& banco){
+void Interface::cobrarCPMF(Banco& banco){
     std::string entrada = "";
     std::cout << std::string(50, '\n');
     std::cout << "09.\t" << "Cobrar CPMF." << std::endl;
@@ -413,7 +413,7 @@ void banco::Interface::cobrarCPMF(Banco& banco){
     return;
 }
 
-void banco::Interface::saldo(Banco& banco){
+void Interface::saldo(Banco& banco){
     int numeroConta;
     double saldo;
 
@@ -436,7 +436,7 @@ void banco::Interface::saldo(Banco& banco){
     return;
 }
 
-void banco::Interface::extrato(Banco& banco){
+void Interface::extrato(Banco& banco){
     int opcao = 4, achou = 0, numeroConta, DIA, MES, ANO;
     ListaDeMovimentacoes movimentacoes;
     ListaDeMovimentacoes::iterator it;
@@ -564,7 +564,7 @@ void banco::Interface::extrato(Banco& banco){
     return;
 }
 
-void banco::Interface::listarClientes(Banco& banco){
+void Interface::listarClientes(Banco& banco){
     ListaDeClientes clientes;
     ListaDeClientes::iterator it;
 
@@ -586,7 +586,7 @@ void banco::Interface::listarClientes(Banco& banco){
     return;
 }
 
-void banco::Interface::listarContas(Banco& banco){
+void Interface::listarContas(Banco& banco){
     ListaDeContas contas;
     ListaDeContas::iterator it;
     Cliente cliente;
