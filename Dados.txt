@@ -27,14 +27,18 @@ Transferencia para conta 1, Valor = 1000, Debito, Data: 3/6/2018
 
 Cliente: Ariel Ribeiro
 Numero da Conta: 1
-Saldo: 2300
+Saldo: 1401
 MOVIMENTAÇOES
 Transferencia da conta 0, Valor = 500, Credito, Data: 28/5/2018
 Deposito, Valor = 800, Credito, Data: 28/5/2018
 Transferencia da conta 0, Valor = 1000, Credito, Data: 3/6/2018
+Transferencia para conta 2, Valor = 300, Debito, Data: 3/6/2018
+Transferencia para conta 2, Valor = 599, Debito, Data: 3/6/2018
 
 Cliente: Joao Pedro
 Numero da Conta: 2
-Saldo: 0
+Saldo: 899
 MOVIMENTAÇOES
+Transferencia da conta 1, Valor = 300, Credito, Data: 3/6/2018
+Transferencia da conta 1, Valor = 599, Credito, Data: 3/6/2018
 
