@@ -2,6 +2,7 @@
 #include "Cliente.h"
 
  using namespace std;
+ using namespace banco;
 
  int main(){
     Cliente A("Jorge Silva", "053.160.443-80", "Rua 40, 14, Cohab Anil IV", "(31) 3244-3629");

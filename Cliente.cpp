@@ -1,53 +1,53 @@
 #include "Cliente.h"
 
-Cliente::Cliente(const std::string nomeCliente, const std::string cpfCnpj, const std::string endereco, const std::string telefone){
+banco::Cliente::Cliente(const std::string nomeCliente, const std::string cpfCnpj, const std::string endereco, const std::string telefone){
     this->nomeCliente = nomeCliente;
     this->cpfCnpj = cpfCnpj;
     this->endereco = endereco;
     this->telefone = telefone;
 }
 
-Cliente::Cliente(const Cliente& original){
+banco::Cliente::Cliente(const Cliente& original){
     this->nomeCliente = original.nomeCliente;
     this->cpfCnpj = original.cpfCnpj;
     this->endereco = original.endereco;
     this->telefone = original.telefone;
 }
 
-Cliente& Cliente::operator=(const Cliente& original){
+banco::Cliente& banco::Cliente::operator=(const Cliente& original){
     this->nomeCliente = original.nomeCliente;
     this->cpfCnpj = original.cpfCnpj;
     this->endereco = original.endereco;
     this->telefone = original.telefone;
 }
 
-void Cliente::setNomeCliente(const std::string nomeCliente){
+void banco::Cliente::setNomeCliente(const std::string nomeCliente){
     this->nomeCliente = nomeCliente;
 }
-void Cliente::setCpfCnpj(const std::string cpfCnpj){
+void banco::Cliente::setCpfCnpj(const std::string cpfCnpj){
     this->cpfCnpj = cpfCnpj;
 }
-void Cliente::setEndereco(const std::string endereco){
+void banco::Cliente::setEndereco(const std::string endereco){
     this->endereco = endereco;
 }
-void Cliente::setTelefone(const std::string telefone){
+void banco::Cliente::setTelefone(const std::string telefone){
     this->telefone = telefone;
 }
 
-std::string const Cliente::getNomeCliente(){
+std::string const banco::Cliente::getNomeCliente(){
     return this->nomeCliente;
 }
 
-std::string const Cliente::getCpfCnpj(){
+std::string const banco::Cliente::getCpfCnpj(){
     return this->cpfCnpj;
 }
-std::string const Cliente::getEndereco(){
+std::string const banco::Cliente::getEndereco(){
     return this->endereco;
 }
-std::string const Cliente::getTelefone(){
+std::string const banco::Cliente::getTelefone(){
     return this->telefone;
 }
 
-bool Cliente::operator==(Cliente& A){
+bool banco::Cliente::operator==(Cliente& A){
     return ((A.getCpfCnpj()==this->getCpfCnpj())&&(A.getEndereco()==this->getEndereco())&&(A.getNomeCliente()==this->getNomeCliente())&&(A.getTelefone()==this->getTelefone()));
 }
