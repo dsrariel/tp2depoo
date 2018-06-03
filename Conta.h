@@ -19,7 +19,7 @@ class Conta{
 
     public:
     Conta(const Cliente &cliente);
-    Conta(const Cliente &cliente,int numeroConta,int proximoNumeroConta, double saldo, const ListaDeMovimentacoes& movimentacoes);
+    Conta(const Cliente &cliente, int numeroConta, int proximoNumeroConta, double saldo, const ListaDeMovimentacoes& movimentacoes);
 
     //Getters
     const int getNumeroConta();
