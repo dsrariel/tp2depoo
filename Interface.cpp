@@ -146,13 +146,14 @@ void banco::Interface::inserirConta(Banco& banco){
             cliente=*it;
             banco.inserirConta(cliente);
             std::cout << "\nConta criada com sucesso! "<<std::endl;
-	    std::cout << "Número da Conta: " << banco.getNovoNumeroConta() - 1 << ". ";
+            Conta ultimaConta = *(--banco.getContas().end());
+	        std::cout << "Número da Conta: " << ultimaConta.getNumeroConta() << ". ";
             std::cout << "Pressione enter para voltar ao menu. " << std::endl;
             std::getline(std::cin, entrada);
             return;
         }
     }
-    std::cout << "\nCliente ainda nao pertence ao Banco, insira o cliente para poder criar uma conta. ";
+    std::cout << "\nCliente ainda não pertence ao Banco, insira o cliente para poder criar uma conta. ";
     std::cout << "Pressione enter para voltar ao menu. " << std::endl;
     std::getline(std::cin, entrada);
     return;

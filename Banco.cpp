@@ -154,10 +154,6 @@ void banco::Banco::getDados(){
     }
 }
 
-const int banco::Banco::getNovoNumeroConta(){
-    return this->contas.begin()->getProximoNumeroConta();
-}
-
 bool banco::Banco::inserirCliente(const Cliente& cliente){
     ListaDeClientes::iterator it;
     Cliente clt=cliente;

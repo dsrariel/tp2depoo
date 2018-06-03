@@ -30,8 +30,7 @@ namespace banco{
         const ListaDeClientes getClientes();
         const ListaDeContas getContas();
         void getDados();
-        const int getNovoNumeroConta(); //Gera novo número de conta para criação de conta
-
+        
         //Outros
         bool inserirCliente(const Cliente& cliente); //Retorna True caso cliente não exista (sucesso) e False caso já exista (falha)
         int excluirCliente(const std::string& cpfCnpj); //Retorna 1 caso cliente não possua conta (sucesso), 0 caso possua uma conta e -1 caso não esteja cadastrado(falha)
