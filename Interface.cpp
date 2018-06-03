@@ -1,6 +1,6 @@
 #include "Interface.h"
 
-int Interface::menu(std::string nomeBanco){
+int banco::Interface::menu(std::string nomeBanco){
     std::string entrada = "";
     int opcao = 15;
     while((opcao > 14)||(opcao < 1)){
@@ -28,7 +28,7 @@ int Interface::menu(std::string nomeBanco){
     return opcao;
 }
 
-int Interface::main(){
+int banco::Interface::main(){
     std::string nomeBanco = "Banco da COG";
     Banco banco(nomeBanco);
     banco.getDados();
@@ -85,7 +85,7 @@ int Interface::main(){
     return 0;
 }
 
-void Interface::inserirCliente(Banco& banco){
+void banco::Interface::inserirCliente(Banco& banco){
     Cliente cliente;
     std::string entrada = "";
     std::cout << std::string(50, '\n');
@@ -125,7 +125,7 @@ void Interface::inserirCliente(Banco& banco){
     return;
 }
 
-void Interface::inserirConta(Banco& banco){
+void banco::Interface::inserirConta(Banco& banco){
     Cliente cliente;
     ListaDeClientes clientes;
     ListaDeClientes::iterator it;
@@ -158,7 +158,7 @@ void Interface::inserirConta(Banco& banco){
     return;
 }
 
-void Interface::excluirCliente(Banco& banco){
+void banco::Interface::excluirCliente(Banco& banco){
     int opcao=3;
     std::string entrada = "",resposta;
     std::cout << std::string(50, '\n');
@@ -193,7 +193,7 @@ void Interface::excluirCliente(Banco& banco){
     return;
 }
 
-void Interface::excluirConta(Banco& banco){
+void banco::Interface::excluirConta(Banco& banco){
     int numeroConta,acao,opcao=3;
 
     std::string entrada = "";
@@ -229,7 +229,7 @@ void Interface::excluirConta(Banco& banco){
     return;
 }
 
-void Interface::depositar(Banco& banco){
+void banco::Interface::depositar(Banco& banco){
     int numeroConta,acao,opcao=3;
     double valor,saldo;
 
@@ -271,7 +271,7 @@ void Interface::depositar(Banco& banco){
     return;
 }
 
-void Interface::sacar(Banco& banco){
+void banco::Interface::sacar(Banco& banco){
     int numeroConta,acao,opcao=3;
     double valor,saldo;
     std::string entrada = "";
@@ -328,26 +328,26 @@ void Interface::sacar(Banco& banco){
 
 }
 
-void Interface::transferir(Banco& banco){
-    int ContaO,ContaD,acao,opcao=3;
-    double valor,saldo;
+void banco::Interface::transferir(Banco& banco){
+    int ContaO, ContaD, acao, opcao = 3;
+    double valor, saldo;
     std::string entrada = "";
     std::cout << std::string(50, '\n');
     std::cout << "07.\t" << "Transferencia entre contas." << std::endl;
 
     std::cout << "Insira o numero da conta de origem: ";
     std::getline(std::cin, entrada);
-    ContaO=atoi(entrada.c_str());
+    ContaO = atoi(entrada.c_str());
 
     std::cout << "Insira o numero da conta de destino: ";
     std::getline(std::cin, entrada);
-    ContaD=atoi(entrada.c_str());
+    ContaD = atoi(entrada.c_str());
 
-    saldo=banco.saldoConta(numeroContaO);
+    saldo = banco.saldoConta(ContaO);
 
     if(saldo==-1){
-	std::cout << "\nConta inválida. ";
-	std::cout << "Pressione enter para voltar ao menu. " << std::endl;
+	    std::cout << "\nConta inválida. ";
+	    std::cout << "Pressione enter para voltar ao menu. " << std::endl;
         std::getline(std::cin, entrada);
         return;
     }
@@ -356,26 +356,28 @@ void Interface::transferir(Banco& banco){
 
     std::cout << "\nInsira o valor da transferência: ";
     std::getline(std::cin, entrada);
-    valor=atof(entrada.c_str());
+    valor = atof(entrada.c_str());
 
     while(opcao != 1 && opcao != 2){
- 	std::cout << std::string(50, '\n');
+ 	    std::cout << std::string(50, '\n');
     	std::cout << "07.\t" << "Transferência entre contas." << std::endl;
-	std::cout << "Você deseja transferir "<< valor <<" reais da conta de número " << numeroContaO << " para conta de número << numeroContaD << ? [Sim=1, Não=2]"<<std::endl;
-	std::getline(std::cin, entrada);
-	std::stringstream stream(entrada);
-	stream >> opcao;
+	    std::cout << "Você deseja transferir "<< valor <<" reais da conta de número " << ContaO << " para conta de número << numeroContaD << ? [Sim=1, Não=2]"<<std::endl;
+	    std::getline(std::cin, entrada);
+	    std::stringstream stream(entrada);
+	    stream >> opcao;
     }
-    std::cout << std::string(50, '\n');
-    if(opcao==1){
-	std::cout << "07.\t" << "Transferencia entre contas." << std::endl;
-        acao=banco.transferencia(ContaO,ContaD,valor);
 
-        if(acao==1){
+    std::cout << std::string(50, '\n');
+    
+    if(opcao == 1){
+	    std::cout << "07.\t" << "Transferencia entre contas." << std::endl;
+        acao=banco.transferencia(ContaO,ContaD,valor);
+        if(acao == 1){
             std::cout << "\nTransferência realizada com sucesso! ";
-	    saldo=banco.saldoConta(numeroConta);
-	    std::cout << "\nSaldo atual: "<< saldo << " reais. ";
-        }else{
+	        saldo = banco.saldoConta(ContaO);
+	        std::cout << "\nSaldo atual: "<< saldo << " reais. ";
+        }
+        else{
             std::cout << "\nConta inválida. ";
         }
     }
@@ -384,7 +386,7 @@ void Interface::transferir(Banco& banco){
     return;
 }
 
-void Interface::cobrarTarifa(Banco& banco){
+void banco::Interface::cobrarTarifa(Banco& banco){
     std::string entrada = "";
     std::cout << std::string(50, '\n');
     std::cout << "08.\t" << "Cobrar tarifa." << std::endl;
@@ -397,7 +399,7 @@ void Interface::cobrarTarifa(Banco& banco){
     return;
 }
 
-void Interface::cobrarCPMF(Banco& banco){
+void banco::Interface::cobrarCPMF(Banco& banco){
     std::string entrada = "";
     std::cout << std::string(50, '\n');
     std::cout << "09.\t" << "Cobrar CPMF." << std::endl;
@@ -410,7 +412,7 @@ void Interface::cobrarCPMF(Banco& banco){
     return;
 }
 
-void Interface::saldo(Banco& banco){
+void banco::Interface::saldo(Banco& banco){
     int numeroConta;
     double saldo;
 
@@ -433,7 +435,7 @@ void Interface::saldo(Banco& banco){
     return;
 }
 
-void Interface::extrato(Banco& banco){
+void banco::Interface::extrato(Banco& banco){
     int opcao = 4, achou = 0, numeroConta, DIA, MES, ANO;
     ListaDeMovimentacoes movimentacoes;
     ListaDeMovimentacoes::iterator it;
@@ -561,7 +563,7 @@ void Interface::extrato(Banco& banco){
     return;
 }
 
-void Interface::listarClientes(Banco& banco){
+void banco::Interface::listarClientes(Banco& banco){
     ListaDeClientes clientes;
     ListaDeClientes::iterator it;
 
@@ -583,7 +585,7 @@ void Interface::listarClientes(Banco& banco){
     return;
 }
 
-void Interface::listarContas(Banco& banco){
+void banco::Interface::listarContas(Banco& banco){
     ListaDeContas contas;
     ListaDeContas::iterator it;
     Cliente cliente;

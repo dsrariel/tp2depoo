@@ -1,15 +1,15 @@
 #include "Conta.h"
 
-int Conta::proximoNumeroConta = 0;
+int banco::Conta::proximoNumeroConta = 0;
 
-Conta::Conta(const Cliente &cliente){
+banco::Conta::Conta(const Cliente &cliente){
     this->numeroConta = proximoNumeroConta;
     this->proximoNumeroConta++;
     this->saldo = 0;
     this->cliente = cliente;
 }
 
-Conta::Conta(const Cliente &cliente,int numeroConta,int proximoNumeroConta, double saldo, const ListaDeMovimentacoes& movimentacoes){
+banco::Conta::Conta(const Cliente &cliente,int numeroConta,int proximoNumeroConta, double saldo, const ListaDeMovimentacoes& movimentacoes){
     this->numeroConta = numeroConta;
     this->proximoNumeroConta = proximoNumeroConta;
     this->saldo = saldo;
@@ -18,24 +18,24 @@ Conta::Conta(const Cliente &cliente,int numeroConta,int proximoNumeroConta, doub
 }
 
 //Getters
-const int Conta::getNumeroConta(){
+const int banco::Conta::getNumeroConta(){
     return this->numeroConta;
 }
-const int Conta::getProximoNumeroConta(){
+const int banco::Conta::getProximoNumeroConta(){
     return this->proximoNumeroConta;
 }
-const double Conta::getSaldo(){
+const double banco::Conta::getSaldo(){
     return this->saldo;
 }
-const Cliente Conta::getCliente(){
+const banco::Cliente banco::Conta::getCliente(){
     return this->cliente;
 }
-const ListaDeMovimentacoes Conta::getMovimentacoes(){
+const ListaDeMovimentacoes banco::Conta::getMovimentacoes(){
     return this->movimentacoes;
 }
 
 //Outras funções
-bool Conta::debitar(const double valor, const std::string descricao){
+bool banco::Conta::debitar(const double valor, const std::string descricao){
     Movimentacao movimentacao(descricao, 'D', valor);
     if (this->saldo >= valor){
         this->saldo -= valor;
@@ -45,13 +45,13 @@ bool Conta::debitar(const double valor, const std::string descricao){
     else
         return false;
 }
-void Conta::creditar(const double valor, const std::string descricao){
+void banco::Conta::creditar(const double valor, const std::string descricao){
     Movimentacao movimentacao(descricao, 'C', valor);
     this->saldo += valor;
     this->movimentacoes.push_back(movimentacao);
 }
 
-const ListaDeMovimentacoes Conta::extratoDatas(const tm dataInicio, const tm dataFim){  
+const ListaDeMovimentacoes banco::Conta::extratoDatas(const tm dataInicio, const tm dataFim){  
     ListaDeMovimentacoes movimentacoesDoPeriodo;
     ListaDeMovimentacoes::iterator  iterador = this->movimentacoes.begin(), 
                                     fimLista = this->movimentacoes.end();
@@ -61,7 +61,7 @@ const ListaDeMovimentacoes Conta::extratoDatas(const tm dataInicio, const tm dat
     //Itera pela lista até achar primeira data inclusa no período ou até que chegue ao fim da lista    
     while(iterador != fimLista){
         data = iterador->getDataMovimentacao();
-        inclusa = dataEntreInicioEFim(data, dataInicio, dataFim);
+        inclusa = banco::dataEntreInicioEFim(data, dataInicio, dataFim);
         if (inclusa)
             break;
         iterador++;
@@ -71,7 +71,7 @@ const ListaDeMovimentacoes Conta::extratoDatas(const tm dataInicio, const tm dat
     //não haverá mais movimentações a serem adicionadas
     while(iterador != fimLista){
         data = iterador->getDataMovimentacao();
-        inclusa = dataEntreInicioEFim(data, dataInicio, dataFim);
+        inclusa = banco::dataEntreInicioEFim(data, dataInicio, dataFim);
         if (!inclusa) 
             break;
         movimentacoesDoPeriodo.push_back(*iterador);
@@ -81,7 +81,7 @@ const ListaDeMovimentacoes Conta::extratoDatas(const tm dataInicio, const tm dat
     return movimentacoesDoPeriodo;
 }
 
-const ListaDeMovimentacoes Conta::extratoDataInicial(const tm dataInicio){
+const ListaDeMovimentacoes banco::Conta::extratoDataInicial(const tm dataInicio){
     time_t agora = time(NULL);
     tm* dataAtual = localtime(&agora);
      
@@ -90,7 +90,7 @@ const ListaDeMovimentacoes Conta::extratoDataInicial(const tm dataInicio){
     return this->extratoDatas(dataInicio, dataFim);
 }
 
-const ListaDeMovimentacoes Conta::extratoMes(){
+const ListaDeMovimentacoes banco::Conta::extratoMes(){
     time_t agora = time(NULL);
     tm* dataAtual = localtime(&agora);
     
@@ -120,11 +120,11 @@ const ListaDeMovimentacoes Conta::extratoMes(){
             break;
     }
     
-    dataMaisDias(&dataFim, numeroDeDiasDoMes);
+    banco::dataMaisDias(&dataFim, numeroDeDiasDoMes);
 return this->extratoDatas(dataInicio, dataFim);
 }
 
-int dataEntreInicioEFim(const tm data, const tm inicio, const tm fim){
+int banco::dataEntreInicioEFim(const tm data, const tm inicio, const tm fim){
         tm data_aux = data, inicio_aux = inicio, fim_aux = fim;
         time_t  time_inicio = mktime(&inicio_aux), 
                 time_fim = mktime(&fim_aux),
@@ -138,7 +138,7 @@ int dataEntreInicioEFim(const tm data, const tm inicio, const tm fim){
         }
 }
 
-void dataMaisDias(tm* data, int dias){
+void banco::dataMaisDias(tm* data, int dias){
     time_t diasEmSegundos = 24*60*60*dias;
     time_t dataEmSegundos = mktime(data) + diasEmSegundos;
     *data = *localtime(&dataEmSegundos);

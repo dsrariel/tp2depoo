@@ -1,6 +1,7 @@
 #include "Banco.h"
 #include <iostream>
 using namespace std;
+using namespace banco;
 
 int main(){
 	Banco bnc=Banco("Banco do Brasil");

@@ -1,10 +1,10 @@
 #include "Banco.h"
 
-Banco::Banco(const std::string& nomeBanco){
+banco::Banco::Banco(const std::string& nomeBanco){
     this->nomeBanco = nomeBanco;
 }
 
-void Banco::setDados(){
+void banco::Banco::setDados(){
     std::ofstream arq("Dados.txt");
     ListaDeClientes::iterator it1;
     ListaDeContas::iterator it2;
@@ -51,15 +51,15 @@ void Banco::setDados(){
     }
 }
 
-const ListaDeClientes  Banco::getClientes(){
+const ListaDeClientes  banco::Banco::getClientes(){
     return this->clientes;
 }
 
-const ListaDeContas Banco::getContas(){
+const ListaDeContas banco::Banco::getContas(){
     return this->contas;
 }
 
-void Banco::getDados(){
+void banco::Banco::getDados(){
     int numeroConta=0,DIA,MES,ANO;
     double val,saldo;
     char DC;
@@ -154,11 +154,11 @@ void Banco::getDados(){
     }
 }
 
-const int Banco::getNovoNumeroConta(){
+const int banco::Banco::getNovoNumeroConta(){
     return this->contas.begin()->getProximoNumeroConta();
 }
 
-bool Banco::inserirCliente(const Cliente& cliente){
+bool banco::Banco::inserirCliente(const Cliente& cliente){
     ListaDeClientes::iterator it;
     Cliente clt=cliente;
     for (it = this->clientes.begin(); it != this->clientes.end(); it++){
@@ -170,7 +170,7 @@ bool Banco::inserirCliente(const Cliente& cliente){
         return 1;
 }
 
-int Banco::excluirCliente(const std::string& cpfCnpj){
+int banco::Banco::excluirCliente(const std::string& cpfCnpj){
     ListaDeClientes::iterator it1;
     ListaDeContas::iterator it2;
     Cliente clt1,clt2;
@@ -195,12 +195,12 @@ int Banco::excluirCliente(const std::string& cpfCnpj){
     return -1;
 }
 
-void Banco::inserirConta(const Cliente& cliente){
+void banco::Banco::inserirConta(const Cliente& cliente){
     Conta conta = Conta(cliente);
     this->contas.push_back(conta);
 }
 
-bool Banco::excluirConta (int numeroConta){
+bool banco::Banco::excluirConta (int numeroConta){
     ListaDeContas::iterator it;
     for (it = this->contas.begin(); it != this->contas.end(); it++){
         //Conta encontrada
@@ -213,7 +213,7 @@ bool Banco::excluirConta (int numeroConta){
     return 0;
 }
 
-bool Banco::depositar (int numeroConta, double valor){
+bool banco::Banco::depositar (int numeroConta, double valor){
     ListaDeContas::iterator it;
     for(it= this->contas.begin();it != this->contas.end();it++){
         //conta encontrada
@@ -226,7 +226,7 @@ bool Banco::depositar (int numeroConta, double valor){
     return 0;
 }
 
-int Banco::sacar (int numeroConta, double valor){
+int banco::Banco::sacar (int numeroConta, double valor){
     ListaDeContas::iterator it;
     for(it= this->contas.begin();it != this->contas.end();it++){
         //conta encontrada
@@ -244,7 +244,7 @@ int Banco::sacar (int numeroConta, double valor){
     return -1;
 }
 
-bool Banco::transferencia (int numeroContaOrigem, int numeroContaDestino, double valor){
+bool banco::Banco::transferencia (int numeroContaOrigem, int numeroContaDestino, double valor){
     ListaDeContas::iterator it,contaO,contaD;
     std::string descricao;
     for(it= this->contas.begin();it != this->contas.end();it++){
@@ -273,7 +273,7 @@ bool Banco::transferencia (int numeroContaOrigem, int numeroContaDestino, double
 
 }
 
-void Banco::tarifa(){
+void banco::Banco::tarifa(){
     ListaDeContas::iterator it;
     for(it= this->contas.begin();it != this->contas.end();it++){
 	//cobra tarifa caso tenha saldo suficiente
@@ -282,7 +282,7 @@ void Banco::tarifa(){
     }
 }
 
-void Banco::cpmf(){
+void banco::Banco::cpmf(){
     ListaDeContas::iterator itC;
     ListaDeMovimentacoes movimetacoesDaSemana;
     ListaDeMovimentacoes:: iterator itM;
@@ -313,7 +313,7 @@ void Banco::cpmf(){
     }
 }
 
-double Banco::saldoConta(int numeroConta){
+double banco::Banco::saldoConta(int numeroConta){
     ListaDeContas::iterator it;
     for(it= this->contas.begin();it != this->contas.end();it++){
         //conta encontrada
@@ -325,7 +325,7 @@ double Banco::saldoConta(int numeroConta){
     return -1;
 }
 
-const ListaDeMovimentacoes Banco::extratoMes(int numeroConta){
+const ListaDeMovimentacoes banco::Banco::extratoMes(int numeroConta){
     ListaDeContas::iterator it;
     for(it= this->contas.begin();it != this->contas.end();it++){
         //conta encontrada
@@ -335,7 +335,7 @@ const ListaDeMovimentacoes Banco::extratoMes(int numeroConta){
     }
 }
 
-const ListaDeMovimentacoes Banco::extratoDataInicial(int numeroConta, tm inicio){
+const ListaDeMovimentacoes banco::Banco::extratoDataInicial(int numeroConta, tm inicio){
     ListaDeContas::iterator it;
     for(it= this->contas.begin();it != this->contas.end();it++){
         //conta encontrada
@@ -345,7 +345,7 @@ const ListaDeMovimentacoes Banco::extratoDataInicial(int numeroConta, tm inicio)
     }
 }
 
-const ListaDeMovimentacoes Banco::extratoDatas(int numeroConta, tm inicio, tm fim){
+const ListaDeMovimentacoes banco::Banco::extratoDatas(int numeroConta, tm inicio, tm fim){
     ListaDeContas::iterator it;
     for(it= this->contas.begin();it != this->contas.end();it++){
         //conta encontrada

@@ -14,15 +14,17 @@ CONTAS
 
 Cliente: Shaka
 Numero da Conta: 0
-Saldo: 7500.5
+Saldo: 6500.5
 MOVIMENTAÇOES
 Deposito, Valor = 8000.5, Credito, Data: 28/5/2018
 Transferencia para conta 1, Valor = 500, Debito, Data: 28/5/2018
+Transferencia para conta 1, Valor = 1000, Debito, Data: 3/6/2018
 
 Cliente: Ariel Ribeiro
 Numero da Conta: 1
-Saldo: 1300
+Saldo: 2300
 MOVIMENTAÇOES
 Transferencia da conta 0, Valor = 500, Credito, Data: 28/5/2018
 Deposito, Valor = 800, Credito, Data: 28/5/2018
+Transferencia da conta 0, Valor = 1000, Credito, Data: 3/6/2018
 
