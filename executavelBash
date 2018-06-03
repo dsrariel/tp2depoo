@@ -1,0 +1,6 @@
+#Abrir este arquivo no bash para Windows faz com que o programa seja compilado e executado
+
+g++ -c main.cpp Movimentacao.cpp Conta.cpp Cliente.cpp Banco.cpp Interface.cpp
+g++ -o main.exe main.o Movimentacao.o Conta.o Cliente.o Banco.o Interface.o
+rm -rf *.o
+./main.exe
